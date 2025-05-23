@@ -1,19 +1,78 @@
 {
-	"todo": [
+	"users": [
 		{
-			"title": "111",
-			"body": "111111",
-			"id": 2
-		},
-		{
-			"title": "333",
-			"body": "333333",
-			"id": 3
-		},
-		{
-			"title": "555",
-			"body": "555555",
-			"id": 4
+			"id": "001",
+			"login": "111111",
+			"password": 234561,
+			"registred_at": "05-11-2023",
+			"role_id": "001"
 		}
-	]
+	],
+
+	"roles": [
+		{
+			"id": "001",
+			"name": "Admin"
+		},
+		{
+			"id": "002",
+			"name": "User"
+		},
+		{
+			"id": "003",
+			"name": "Guest"
+		}
+	],
+
+	"widgets": [
+		{
+			"id": "001",
+			"name": "Notes",
+			"content": [
+				{ "notes_id": "001", "content": "Content" },
+				{ "notes_id": "002", "content": "Content" },
+				{ "notes_id": "003", "content": "Content" }
+			]
+		},
+		{
+			"id": "002",
+			"name": "Schedule",
+			"content": "ScheduleList"
+		},
+		{
+			"id": "003",
+			"name": "Сalendar",
+			"content": "ScheduleCountToDay"
+		}
+	],
+
+	"notes": [
+		{ "id": "001", "content": "Content", "pablishet_at": "25-10-2025", "post_id": "001" },
+		{ "id": "002", "content": "Content", "pablishet_at": "20-12-2025", "post_id": "002" },
+		{ "id": "003", "content": "Content", "pablishet_at": "10-02-2021", "post_id": "003" }
+	],
+
+	"schedule": [
+		{ "reminders_id": "001", "content": "Content" },
+		{ "reminders_id": "002", "content": "Content" },
+		{ "reminders_id": "003", "content": "Content" },
+
+		{ "events_id": "001", "title": "title" },
+		{ "events_id": "002", "title": "title" },
+		{ "events_id": "003", "title": "title" }
+	],
+
+	"reminders": [
+		{ "id": "001", "content": "Content", "pablishet_at": "22-01-2024" },
+		{ "id": "002", "content": "Content", "pablishet_at": "12-11-2027" },
+		{ "id": "003", "content": "Content", "pablishet_at": "25-06-2029" }
+	],
+
+	"events": [
+		{ "id": "001", "title": "title", "content": "Content", "pablishet_at": "11-09-2022" },
+		{ "id": "002", "title": "title", "content": "Content", "pablishet_at": "05-11-2021" },
+		{ "id": "003", "title": "title", "content": "Content", "pablishet_at": "15-10-2020" }
+	],
+
+	"calendar": [{ "id": "001", "content": "Date" }]
 }
