@@ -1,7 +1,7 @@
 .ControlPanel {
 	display: flex;
 	flex-direction: row;
-	padding: 0 5px;
+	padding: 0 10px;
 }
 
 .profil {
@@ -16,6 +16,6 @@
 	justify-content: end;
 }
 
-.menu {
-	font-size: 30px;
+.buttonsPanel:hover {
+	cursor: pointer;
 }
