@@ -1,0 +1,14 @@
+.iOhNo {
+	display: flex;
+	flex-direction: column;
+	color: aliceblue;
+	background-color: #0e0e53;
+}
+
+.iOhNo h2 {
+	text-align: center;
+}
+
+.content {
+	padding: 120px 0 120px 0;
+}

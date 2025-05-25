@@ -1,0 +1,21 @@
+.ControlPanel {
+	display: flex;
+	flex-direction: row;
+	padding: 0 5px;
+}
+
+.profil {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
+.buttonsPanel {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
+.menu {
+	font-size: 30px;
+}
