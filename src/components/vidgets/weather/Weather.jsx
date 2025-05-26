@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { LogoDate } from './components';
+import { City, Temperature, Sky } from './components';
 import styles from './Weather.module.css';
 
 export const Weather = () => {
 	const [city, setCiy] = useState('');
 	const [temperature, setTemperature] = useState('');
 	const [weather, setWeather] = useState('');
+	const [weatherSky, setWeatherSky] = useState('');
 
 	useEffect(() => {
 		fetch(
@@ -16,15 +17,14 @@ export const Weather = () => {
 				setCiy(name);
 				setTemperature(Math.round(main.temp));
 				setWeather(weather[0].description);
+				setWeatherSky(weather[0].id);
 			});
 	}, []);
 	return (
 		<div className={styles.WeatherContainer}>
-			<LogoDate />
-			<div className={styles.City}>{city}</div>
-			<div className={styles.Temperature}>
-				{temperature} градусов, {weather}
-			</div>
+			<City city={city} />
+			<Temperature temperature={temperature} />
+			<Sky weather={weather} weatherSky={weatherSky} />
 		</div>
 	);
 };

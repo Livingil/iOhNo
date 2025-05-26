@@ -1,0 +1,15 @@
+.Sky {
+	position: relative;
+	font-size: 16px;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 0px 0px 20px 20px;
+}
+
+.back {
+	margin-left: 110px;
+}
+
+.top {
+	position: absolute;
+	margin-top: 55px;
+}
