@@ -13,17 +13,16 @@ export const ControlPanel = () => {
 					<Icon id="fa-user-circle" />
 				</Link>
 				<div className={styles.buttonsPanel}>
-					<div onClick={() => navigate(-1)}>
+					<div onClick={() => navigate(-1)} className={styles.button}>
 						<Icon id="fa-chevron-circle-left" />
 					</div>
-
-					<Link to="/create">
+					<Link to="/create" className={styles.button}>
 						<Icon id="fa-plus-circle" />
 					</Link>
-					<Link to="/vidgets">
+					<Link to="/vidgets" className={styles.button}>
 						<Icon id="fa-th" />
 					</Link>
-					<Link to="/info">
+					<Link to="/info" className={styles.button}>
 						<Icon id="fa-info-circle" />
 					</Link>
 				</div>

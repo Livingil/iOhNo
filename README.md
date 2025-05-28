@@ -19,7 +19,6 @@
 
 - пользователи - users: id / login / password / registred_at / role_id
 - роли - roles: id / name
-- виджет - widgets: id / name / content
 - контент виджета Заметки: notes_id / content
 - контент виджета Расписание: schedule: schedule_count
 - контент виджета Календарь: calendar: id / content / pablishet_at

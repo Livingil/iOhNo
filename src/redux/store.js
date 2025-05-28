@@ -1,4 +1,11 @@
-import { createStore } from 'redux';
-import { reducer } from './reducer';
+import { reducerNotes, reducerError, reducerFlags } from './reducers';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { thunk } from 'redux-thunk';
 
-export const store = createStore(reducer);
+const reducer = combineReducers({
+	notes: reducerNotes,
+	error: reducerError,
+	flags: reducerFlags,
+});
+
+export const store = createStore(reducer, applyMiddleware(thunk));

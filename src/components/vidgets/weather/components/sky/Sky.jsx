@@ -6,8 +6,8 @@ export const Sky = ({ weather, weatherSky }) => {
 	const newWeather = weather.charAt(0).toUpperCase() + weather.slice(1);
 	return (
 		<div className={styles.Sky}>
-			<div className={styles.top}>{newWeather}</div>
-			<div className={styles.back}>
+			<div className={styles.text}>{newWeather}</div>
+			<div className={styles.logo}>
 				<IconSky weatherSky={weatherSky} />
 			</div>
 		</div>

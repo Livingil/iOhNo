@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { City, Temperature, Sky } from './components';
 import styles from './Weather.module.css';
 
@@ -21,10 +22,12 @@ export const Weather = () => {
 			});
 	}, []);
 	return (
-		<div className={styles.WeatherContainer}>
-			<City city={city} />
-			<Temperature temperature={temperature} />
+		<Link to="/weather" className={styles.WeatherContainer}>
+			<div>
+				<City city={city} />
+				<Temperature temperature={temperature} />
+			</div>
 			<Sky weather={weather} weatherSky={weatherSky} />
-		</div>
+		</Link>
 	);
 };

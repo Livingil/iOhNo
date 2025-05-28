@@ -24,32 +24,10 @@
 		}
 	],
 
-	"widgets": [
-		{
-			"id": "001",
-			"name": "Notes",
-			"content": [
-				{ "notes_id": "001", "content": "Content" },
-				{ "notes_id": "002", "content": "Content" },
-				{ "notes_id": "003", "content": "Content" }
-			]
-		},
-		{
-			"id": "002",
-			"name": "Schedule",
-			"content": "ScheduleList"
-		},
-		{
-			"id": "003",
-			"name": "Сalendar",
-			"content": "ScheduleCountToDay"
-		}
-	],
-
 	"notes": [
-		{ "id": "001", "content": "Content", "pablishet_at": "25-10-2025", "post_id": "001" },
-		{ "id": "002", "content": "Content", "pablishet_at": "20-12-2025", "post_id": "002" },
-		{ "id": "003", "content": "Content", "pablishet_at": "10-02-2021", "post_id": "003" }
+		{ "id": "001", "content": "wake up", "pablishet_at": "25-10-2025" },
+		{ "id": "002", "content": "go in work", "pablishet_at": "20-12-2025" },
+		{ "id": "003", "content": "work", "pablishet_at": "10-02-2021" }
 	],
 
 	"schedule": [
