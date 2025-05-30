@@ -5,3 +5,14 @@
 	align-items: center;
 	font-weight: bold;
 }
+.picturiesText {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.adresName {
+	color: #007bff;
+	margin: 5px;
+	cursor: default;
+}

@@ -1,20 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from '../../../redux/actions';
+import { useSelector } from 'react-redux';
 import { selectNotes } from '../../../redux/selectors';
+import { NotesList, NoteContent, Search } from './components';
+import { sortByCreationDate } from '../../vidgets/utils';
 import styles from './Notes.module.css';
-import { useEffect } from 'react';
 
 export const NotesPage = () => {
 	const notes = useSelector(selectNotes);
-	console.log(notes);
 
-	const dispatch = useDispatch();
+	const sortedNotes = sortByCreationDate(notes);
 
-	const handleFatchData = () => dispatch(fetchData('notes'));
-
-	useEffect(() => {
-		handleFatchData();
-	}, []);
-
-	return <div className={styles.NotesPage}>Notes</div>;
+	return (
+		<div className={styles.NotesPage}>
+			<div className={styles.notesList}>
+				<Search />
+				<NotesList notes={sortedNotes} />
+				<div>
+					<button>New note</button>
+				</div>
+			</div>
+			<NoteContent noteDefault={sortedNotes[0]} />
+		</div>
+	);
 };

@@ -6,8 +6,12 @@ export const fetchData = (adres) => {
 		dispatch(setError(null));
 		try {
 			const response = await fetch(`http://localhost:3000/${adres}`);
-			const loadedNotes = await response.json();
-			dispatch(setValueNotes(loadedNotes));
+			const loadedData = await response.json();
+			switch (adres) {
+				case 'notes':
+					dispatch(setValueNotes(loadedData));
+					break;
+			}
 		} catch {
 			dispatch(setError('Все пропало'));
 		} finally {
