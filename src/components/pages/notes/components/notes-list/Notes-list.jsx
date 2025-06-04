@@ -7,7 +7,7 @@ import styles from './Notes-list.module.css';
 export const NotesList = () => {
 	const dispatch = useDispatch();
 
-	const notes = useSelector(selectSortedNotes);
+	const sortedNotes = useSelector(selectSortedNotes);
 
 	const handleClickForValueNote = (note) => {
 		event.preventDefault();
@@ -21,7 +21,7 @@ export const NotesList = () => {
 
 	return (
 		<div className={styles.scrollableList}>
-			{notes.map((note) => (
+			{sortedNotes.map((note) => (
 				<div key={note.id} className={styles.notesList} onClick={() => handleClickForValueNote(note)}>
 					<div className={styles.header}>
 						<div className={styles.noteTitle}>{note.title}</div>

@@ -2,6 +2,7 @@
 	height: 450px;
 	overflow-y: scroll;
 	padding-right: 10px;
+	margin-bottom: 10px;
 }
 
 ::-webkit-scrollbar {
@@ -37,6 +38,10 @@
 	padding: 10px;
 	margin-bottom: 10px;
 	cursor: pointer;
+}
+
+.notesList:last-child {
+	margin-bottom: 1px;
 }
 
 .notesList:hover {

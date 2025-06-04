@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { selectNotes, selectSearchResult } from '../../../redux/selectors';
+import { selectLoading, selectNotes } from '../../../redux/selectors';
 import { NotesList, NoteContent, Search } from './components';
-import { sortByCreationDate, timeNow } from '../../../utils';
+import { timeNow } from '../../../utils';
 import { dateNow } from '../../../utils';
-import { fetchData, setNote, setValueSortedNotes } from '../../../redux/actions';
+import { fetchData, setNote } from '../../../redux/actions';
 import styles from './Notes.module.css';
+import { Loader } from '../../loader/Loader';
 
 export const NotesPage = () => {
 	const [currentNotes, setCurrentNotes] = useState('');
 	const [flagNewNoteButton, setFlagNewNoteButton] = useState(false);
 
 	const notes = useSelector(selectNotes);
-	const searchResult = useSelector(selectSearchResult);
+
+	const loading = useSelector(selectLoading);
 
 	const dispatch = useDispatch();
 
@@ -33,16 +35,18 @@ export const NotesPage = () => {
 	};
 
 	useEffect(() => {
-		const instalSortedNotes =
-			sortByCreationDate(searchResult) ?? sortByCreationDate(currentNotes) ?? sortByCreationDate(notes);
-		dispatch(setValueSortedNotes(instalSortedNotes));
-	}, [dispatch, currentNotes, searchResult, notes]);
+		dispatch(fetchData('notes'));
+	}, [dispatch]);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<div className={styles.NotesPage}>
 			<div className={styles.notesList}>
-				{/* <Search /> */}
-				<NotesList />
+				<Search />
+				<NotesList currentNotes={currentNotes} />
 				<div>
 					<button className={styles.button} onClick={handleNewNote}>
 						New note

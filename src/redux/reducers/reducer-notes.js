@@ -10,9 +10,6 @@ export const reducerNotes = (state = initialStateNotes, action) => {
 		case 'SET_VALUE_NOTE': {
 			return { ...state, note: payload };
 		}
-		case 'SET_VALUE_SORTED_NOTES': {
-			return { ...state, sortedNotes: payload };
-		}
 		case 'SET_VALUE_SEARCH_RESULT': {
 			return { ...state, searchResult: payload };
 		}

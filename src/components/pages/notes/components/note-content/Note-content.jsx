@@ -42,6 +42,7 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 			<div className={styles.header}>
 				<textarea
 					className={styles.NoteTitle}
+					required
 					name="noteTitle"
 					id="noteTitleId"
 					placeholder="Enter title"
@@ -54,6 +55,7 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 			</div>
 			<textarea
 				className={styles.NoteContent}
+				required
 				name="noteContent"
 				id="noteContentId"
 				placeholder="Enter content"

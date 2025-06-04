@@ -1,6 +1,5 @@
 export * from './error';
 export * from './notes/notes';
-export * from './notes/sorted-notes';
 export * from './notes/search-result';
 export * from './notes/note';
 export * from './async_action/create';

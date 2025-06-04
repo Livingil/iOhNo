@@ -5,7 +5,7 @@ const parseDate = (note) => {
 
 export const sortByCreationDate = (notes) => {
 	if (!notes) return undefined;
-	return [...notes].sort((a, b) => {
+	return notes.sort((a, b) => {
 		const dateA = parseDate(a);
 		const dateB = parseDate(b);
 		return dateB.getTime() - dateA.getTime();

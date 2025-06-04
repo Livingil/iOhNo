@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setValueSearchResult } from '../../../../../redux/actions';
-import { selectSortedNotes } from '../../../../../redux/selectors';
+import { selectNotes } from '../../../../../redux/selectors';
 import styles from './Search.module.css';
 
 export const Search = () => {
@@ -9,13 +9,11 @@ export const Search = () => {
 
 	const dispatch = useDispatch();
 
-	const currentSortedNotes = useSelector(selectSortedNotes);
+	const currentSortedNotes = useSelector(selectNotes);
 
 	const handleSearchChange = () => {
 		setSearchText(event.target.value);
 	};
-
-	console.log('currentSortedNotes', currentSortedNotes);
 
 	useEffect(() => {
 		if (searchText) {
@@ -29,6 +27,8 @@ export const Search = () => {
 					}),
 				),
 			);
+		} else {
+			dispatch(setValueSearchResult(currentSortedNotes));
 		}
 	}, [dispatch, searchText, currentSortedNotes]);
 
