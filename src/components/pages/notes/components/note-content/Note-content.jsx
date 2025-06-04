@@ -1,14 +1,21 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { selectNote } from '../../../../../redux/selectors';
 import { Icon } from '../../../../icon/Icon';
+import { create, reData, setNote } from '../../../../../redux/actions';
 import styles from './Note-content.module.css';
+import { selectSortedNotes } from '../../../../../redux/selectors';
 
-export const NoteContent = ({ noteDefault }) => {
+export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) => {
 	const [textTitle, setTextTitle] = useState('');
 	const [textContent, setTextContent] = useState('');
 
+	const dispatch = useDispatch();
+
 	const note = useSelector(selectNote);
+
+	const notes = useSelector(selectSortedNotes);
+	const noteDefault = notes[0];
 
 	const handleChange = (event, setter) => {
 		setter(event.target.value);
@@ -19,26 +26,39 @@ export const NoteContent = ({ noteDefault }) => {
 		setTextContent(note?.content ?? noteDefault?.content);
 	}, [note, noteDefault]);
 
+	const handleSaveNote = () => {
+		event.preventDefault();
+		if (flagNewNoteButton) {
+			dispatch(create(textTitle, textContent, 'notes'));
+		} else {
+			dispatch(reData(note.id || noteDefault.id, 'notes', textTitle, textContent));
+			dispatch(setNote([]));
+		}
+		handleSetFlagNewNoteButton(false);
+	};
+
 	return (
-		<form className={styles.form}>
+		<form className={styles.form} onSubmit={handleSaveNote}>
 			<div className={styles.header}>
-				<input
+				<textarea
 					className={styles.NoteTitle}
 					name="noteTitle"
 					id="noteTitleId"
-					value={textTitle}
-					onChange={() => handleChange(event, setTextTitle)}
-				></input>
-				<div className={styles.saveIcon}>
+					placeholder="Enter title"
+					value={textTitle === 'New note' ? '' : textTitle}
+					onChange={(event) => handleChange(event, setTextTitle)}
+				></textarea>
+				<button className={styles.saveIcon} type="submit">
 					<Icon id="fa-floppy-o" />
-				</div>
+				</button>
 			</div>
 			<textarea
 				className={styles.NoteContent}
 				name="noteContent"
 				id="noteContentId"
-				value={textContent}
-				onChange={() => handleChange(event, setTextContent)}
+				placeholder="Enter content"
+				value={textContent === 'Your text' ? '' : textContent}
+				onChange={(event) => handleChange(event, setTextContent)}
 			></textarea>
 		</form>
 	);

@@ -10,7 +10,7 @@
 	width: 300px;
 }
 
-button {
+.button {
 	background-color: rgba(28, 28, 30, 0.6);
 	color: #fff;
 	border: none;
@@ -25,12 +25,12 @@ button {
 	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-button:hover {
+.button:hover {
 	background-color: rgba(55, 55, 59, 0.6);
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-button:active {
+.button:active {
 	background-color: rgba(255, 255, 255, 0.3);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

@@ -1,7 +1,8 @@
+import { dateNow, timeNow } from '../../../utils';
 import { setValueLoading, setError, setValueNotes } from '../../actions';
 import { selectNotes } from '../../selectors';
 
-export const createTodo = (title, body, adres) => {
+export const create = (title, content, adres) => {
 	return async (dispatch, getState) => {
 		dispatch(setValueLoading(true));
 		dispatch(setError(null));
@@ -11,13 +12,15 @@ export const createTodo = (title, body, adres) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json;charset=utf-8' },
 				body: JSON.stringify({
-					title: title,
-					body: body,
+					title,
+					content,
+					creation_at: dateNow(),
+					time_creation_at: timeNow(),
 				}),
 			});
-			const newTodo = await response.json();
-			const currentTodos = selectNotes(getState());
-			dispatch(setValueNotes([...currentTodos, newTodo]));
+			const newNote = await response.json();
+			const currentNotes = selectNotes(getState());
+			dispatch(setValueNotes([newNote, ...currentNotes]));
 		} catch {
 			dispatch(setError('Все пропало'));
 		} finally {

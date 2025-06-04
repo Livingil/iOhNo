@@ -1,44 +1,39 @@
-import { useDispatch } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
-import { handleClickForNoteContent } from '../../../../vidgets/utils';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../../../icon/Icon';
+import { selectSortedNotes } from '../../../../../redux/selectors';
+import { deleteData, setNote } from '../../../../../redux/actions';
 import styles from './Notes-list.module.css';
 
-export const NotesList = ({ notes }) => {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [currentNotes, setCurrentNotes] = useState([]);
-
+export const NotesList = () => {
 	const dispatch = useDispatch();
 
-	const handleClick = (id) => {
-		console.log(id);
+	const notes = useSelector(selectSortedNotes);
+
+	const handleClickForValueNote = (note) => {
+		event.preventDefault();
+		dispatch(setNote(note));
 	};
 
-	const itemsPerPage = 5;
-
-	useEffect(() => {
-		const startIndex = (currentPage - 1) * itemsPerPage;
-		const endIndex = startIndex + itemsPerPage;
-		const newNotes = notes.slice(startIndex, endIndex);
-		setCurrentNotes(newNotes);
-	}, [currentPage, notes, itemsPerPage]);
+	const handleClickDelete = (adres, id) => {
+		event.preventDefault();
+		dispatch(deleteData(adres, id));
+	};
 
 	return (
-		<div>
-			{currentNotes.map((note) => (
-				<div
-					key={note.id}
-					className={styles.notesList}
-					onClick={() => handleClickForNoteContent(dispatch, note)}
-				>
+		<div className={styles.scrollableList}>
+			{notes.map((note) => (
+				<div key={note.id} className={styles.notesList} onClick={() => handleClickForValueNote(note)}>
 					<div className={styles.header}>
 						<div className={styles.noteTitle}>{note.title}</div>
-						<div className={styles.button} onClick={() => handleClick(note.id)}>
+						<div className={styles.button} onClick={() => handleClickDelete('notes', note.id)}>
 							<Icon id="fa-trash-o" />
 						</div>
 					</div>
 
-					<div className={styles.noteDate}>{note.creation_at}</div>
+					<div className={styles.noteDate}>
+						{note.creation_at}
+						<div className={styles.time}>{note.time_creation_at}</div>
+					</div>
 					<div className={styles.noteContent}>{note.content}</div>
 				</div>
 			))}

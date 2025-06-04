@@ -24,12 +24,10 @@
 }
 
 .NoteTitle {
-	height: auto;
 	font-size: 32px;
 	border-width: 0px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	height: auto;
+	padding: 0;
 	width: 100%;
 }
 
@@ -43,7 +41,7 @@
 	height: 100%;
 	font-size: 16px;
 	border-width: 0px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .NoteContent:focus,
@@ -51,8 +49,18 @@
 	outline: none;
 }
 
+.saveIcon {
+	display: flex;
+	background: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: #fff;
+	font-size: 18px;
+	padding: 0;
+	margin: 0;
+}
+
 .saveIcon :hover {
 	color: #007bff;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	cursor: pointer;
 }

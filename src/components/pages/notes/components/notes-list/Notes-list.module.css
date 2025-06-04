@@ -1,3 +1,26 @@
+.scrollableList {
+	height: 450px;
+	overflow-y: scroll;
+	padding-right: 10px;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.4);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
 .notesList {
 	background-color: rgb(28, 28, 30, 0.6);
 	border-radius: 15px;
@@ -32,6 +55,16 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.noteDate {
+	display: flex;
+	flex-direction: row;
+}
+
+.time {
+	color: rgba(255, 255, 255, 0.6);
+	padding-left: 10px;
 }
 
 .noteContent {

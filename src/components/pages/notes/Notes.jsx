@@ -1,24 +1,58 @@
-import { useSelector } from 'react-redux';
-import { selectNotes } from '../../../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { selectNotes, selectSearchResult } from '../../../redux/selectors';
 import { NotesList, NoteContent, Search } from './components';
-import { sortByCreationDate } from '../../vidgets/utils';
+import { sortByCreationDate, timeNow } from '../../../utils';
+import { dateNow } from '../../../utils';
+import { fetchData, setNote, setValueSortedNotes } from '../../../redux/actions';
 import styles from './Notes.module.css';
 
 export const NotesPage = () => {
-	const notes = useSelector(selectNotes);
+	const [currentNotes, setCurrentNotes] = useState('');
+	const [flagNewNoteButton, setFlagNewNoteButton] = useState(false);
 
-	const sortedNotes = sortByCreationDate(notes);
+	const notes = useSelector(selectNotes);
+	const searchResult = useSelector(selectSearchResult);
+
+	const dispatch = useDispatch();
+
+	const handleSetFlagNewNoteButton = (boolValue) => setFlagNewNoteButton(boolValue);
+
+	const handleNewNote = () => {
+		handleSetFlagNewNoteButton(true);
+		dispatch(setNote([]));
+		const newNotes = {
+			id: Date.now(),
+			title: 'New note',
+			content: 'Your text',
+			creation_at: dateNow(),
+			time_creation_at: timeNow(),
+		};
+		const newArrowNotes = [newNotes, ...notes];
+		setCurrentNotes(newArrowNotes);
+	};
+
+	useEffect(() => {
+		const instalSortedNotes =
+			sortByCreationDate(searchResult) ?? sortByCreationDate(currentNotes) ?? sortByCreationDate(notes);
+		dispatch(setValueSortedNotes(instalSortedNotes));
+	}, [dispatch, currentNotes, searchResult, notes]);
 
 	return (
 		<div className={styles.NotesPage}>
 			<div className={styles.notesList}>
-				<Search />
-				<NotesList notes={sortedNotes} />
+				{/* <Search /> */}
+				<NotesList />
 				<div>
-					<button>New note</button>
+					<button className={styles.button} onClick={handleNewNote}>
+						New note
+					</button>
 				</div>
 			</div>
-			<NoteContent noteDefault={sortedNotes[0]} />
+			<NoteContent
+				flagNewNoteButton={flagNewNoteButton}
+				handleSetFlagNewNoteButton={handleSetFlagNewNoteButton}
+			/>
 		</div>
 	);
 };
