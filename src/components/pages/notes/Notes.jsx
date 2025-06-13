@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { selectLoading, selectNotes } from '../../../redux/selectors';
+import { selectLoading, selectNotes, selectSortedNotes } from '../../../redux/selectors';
 import { NotesList, NoteContent, Search } from './components';
 import { timeNow } from '../../../utils';
 import { dateNow } from '../../../utils';
@@ -13,7 +13,7 @@ export const NotesPage = () => {
 	const [currentNotes, setCurrentNotes] = useState('');
 	const [flagNewNoteButton, setFlagNewNoteButton] = useState(false);
 
-	const notes = useSelector(selectNotes);
+	const notes = useSelector(selectSortedNotes);
 
 	const loading = useSelector(selectLoading);
 
@@ -32,6 +32,7 @@ export const NotesPage = () => {
 			content: 'Your text',
 			creation_at: dateNow(),
 			time_creation_at: timeNow(),
+			user_id: '',
 		};
 
 		const newArrowNotes = [newNotes, ...notes];

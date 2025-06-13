@@ -3,11 +3,13 @@ const parseDate = (note) => {
 	return new Date(`${year}-${month}-${day}T${note.time_creation_at}:00`);
 };
 
-export const sortByCreationDate = (notes) => {
-	if (!notes) return undefined;
-	return notes.sort((a, b) => {
-		const dateA = parseDate(a);
-		const dateB = parseDate(b);
-		return dateB.getTime() - dateA.getTime();
-	});
+export const sortByCreationDate = (notes, user) => {
+	if (!notes || !user) return undefined;
+	return [...notes]
+		.filter((note) => note.user_id === user.id)
+		.sort((a, b) => {
+			const dateA = parseDate(a);
+			const dateB = parseDate(b);
+			return dateB.getTime() - dateA.getTime();
+		});
 };

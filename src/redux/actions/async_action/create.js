@@ -2,7 +2,7 @@ import { dateNow, timeNow } from '../../../utils';
 import { setValueLoading, setError, setValueNotes } from '../../actions';
 import { selectNotes } from '../../selectors';
 
-export const create = (title, content, adres) => {
+export const create = (title, content, adres, userId) => {
 	return async (dispatch, getState) => {
 		dispatch(setValueLoading(true));
 		dispatch(setError(null));
@@ -16,6 +16,7 @@ export const create = (title, content, adres) => {
 					content,
 					creation_at: dateNow(),
 					time_creation_at: timeNow(),
+					user_id: userId,
 				}),
 			});
 			const newNote = await response.json();

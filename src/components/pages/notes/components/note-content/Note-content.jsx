@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { selectNote } from '../../../../../redux/selectors';
+import { selectNote, selectUser } from '../../../../../redux/selectors';
 import { Icon } from '../../../../icon/Icon';
 import { create, reData, setNote } from '../../../../../redux/actions';
 import styles from './Note-content.module.css';
@@ -11,6 +11,8 @@ export const NoteContent = ({ currentNotes, handleCurrentNotes, flagNewNoteButto
 	const [textContent, setTextContent] = useState('');
 
 	const dispatch = useDispatch();
+
+	const user = useSelector(selectUser);
 
 	const note = useSelector(selectNote);
 
@@ -28,8 +30,8 @@ export const NoteContent = ({ currentNotes, handleCurrentNotes, flagNewNoteButto
 
 	const handleSaveNote = () => {
 		event.preventDefault();
-		if (flagNewNoteButton) {
-			dispatch(create(textTitle, textContent, 'notes'));
+		if (flagNewNoteButton || !noteDefault) {
+			dispatch(create(textTitle, textContent, 'notes', user.id));
 			handleCurrentNotes('');
 		} else {
 			dispatch(reData(note.id || noteDefault.id, 'notes', textTitle, textContent));

@@ -1,6 +1,7 @@
-import { getUser } from './get-user';
-import { addUser } from './add-user';
+import { getUser } from './users/get-user';
+
 import { sessions } from './sessions';
+import { addUser } from './users/add-user';
 
 export const server = {
 	async authorize(authLogin, authPassword) {
@@ -26,16 +27,16 @@ export const server = {
 	},
 
 	async register(regLogin, regPassword) {
-		const user = await getUser(regLogin);
+		const existedUser = await getUser(regLogin);
 
-		if (user) {
+		if (existedUser) {
 			return {
 				error: 'This login busy',
 				res: null,
 			};
 		}
 
-		await addUser(regLogin, regPassword);
+		const user = await addUser(regLogin, regPassword);
 
 		return {
 			error: null,
