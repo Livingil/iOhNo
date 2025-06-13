@@ -9,7 +9,7 @@
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"format": "prettier --write ./src",
-		"json": "json-server --watch src/db.json --delay 2000"
+		"json": "json-server --watch src/db.json --delay 1000"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^4.1.3",

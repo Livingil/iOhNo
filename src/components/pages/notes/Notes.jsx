@@ -4,9 +4,10 @@ import { selectLoading, selectNotes } from '../../../redux/selectors';
 import { NotesList, NoteContent, Search } from './components';
 import { timeNow } from '../../../utils';
 import { dateNow } from '../../../utils';
-import { fetchData, setNote } from '../../../redux/actions';
-import styles from './Notes.module.css';
+import { fetchData } from '../../../redux/actions';
 import { Loader } from '../../loader/Loader';
+import { Button } from '../../markup-components';
+import styles from './Notes.module.css';
 
 export const NotesPage = () => {
 	const [currentNotes, setCurrentNotes] = useState('');
@@ -20,9 +21,11 @@ export const NotesPage = () => {
 
 	const handleSetFlagNewNoteButton = (boolValue) => setFlagNewNoteButton(boolValue);
 
+	const handleCurrentNotes = (cleaner) => setCurrentNotes(cleaner);
+
 	const handleNewNote = () => {
 		handleSetFlagNewNoteButton(true);
-		dispatch(setNote([]));
+
 		const newNotes = {
 			id: Date.now(),
 			title: 'New note',
@@ -30,6 +33,7 @@ export const NotesPage = () => {
 			creation_at: dateNow(),
 			time_creation_at: timeNow(),
 		};
+
 		const newArrowNotes = [newNotes, ...notes];
 		setCurrentNotes(newArrowNotes);
 	};
@@ -48,12 +52,21 @@ export const NotesPage = () => {
 				<Search />
 				<NotesList currentNotes={currentNotes} />
 				<div>
-					<button className={styles.button} onClick={handleNewNote}>
+					<Button
+						onClick={handleNewNote}
+						style={{
+							width: '100%',
+							backgroundColor: 'rgba(28, 28, 30, 0.6)',
+							border: '1px solid rgba(255, 255, 255, 0.2)',
+						}}
+					>
 						New note
-					</button>
+					</Button>
 				</div>
 			</div>
 			<NoteContent
+				currentNotes={currentNotes}
+				handleCurrentNotes={handleCurrentNotes}
 				flagNewNoteButton={flagNewNoteButton}
 				handleSetFlagNewNoteButton={handleSetFlagNewNoteButton}
 			/>

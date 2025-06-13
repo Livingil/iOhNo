@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { HomePage, NotesPage } from '../components';
+import { Authorization, HomePage, NotesPage } from '../components';
 
 export const Routs = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomePage />} />
 			<Route path="/notes" element={<NotesPage />} />
-			<Route path="/login" element={<div>Authorization</div>} />
+			<Route path="/login" element={<Authorization />} />
 			<Route path="/info" element={<div>Info</div>} />
 			<Route path="/create" element={<div>Create</div>} />
 			<Route path="/vidgets" element={<div>Vidgets</div>} />

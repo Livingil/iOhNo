@@ -6,7 +6,7 @@ import { create, reData, setNote } from '../../../../../redux/actions';
 import styles from './Note-content.module.css';
 import { selectSortedNotes } from '../../../../../redux/selectors';
 
-export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) => {
+export const NoteContent = ({ currentNotes, handleCurrentNotes, flagNewNoteButton, handleSetFlagNewNoteButton }) => {
 	const [textTitle, setTextTitle] = useState('');
 	const [textContent, setTextContent] = useState('');
 
@@ -15,21 +15,22 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 	const note = useSelector(selectNote);
 
 	const notes = useSelector(selectSortedNotes);
-	const noteDefault = notes[0];
+	const noteDefault = currentNotes[0] || notes[0];
 
 	const handleChange = (event, setter) => {
 		setter(event.target.value);
 	};
 
 	useEffect(() => {
-		setTextTitle(note?.title ?? noteDefault?.title);
-		setTextContent(note?.content ?? noteDefault?.content);
+		setTextTitle(note?.title ?? noteDefault?.title ?? '');
+		setTextContent(note?.content ?? noteDefault?.content ?? '');
 	}, [note, noteDefault]);
 
 	const handleSaveNote = () => {
 		event.preventDefault();
 		if (flagNewNoteButton) {
 			dispatch(create(textTitle, textContent, 'notes'));
+			handleCurrentNotes('');
 		} else {
 			dispatch(reData(note.id || noteDefault.id, 'notes', textTitle, textContent));
 			dispatch(setNote([]));

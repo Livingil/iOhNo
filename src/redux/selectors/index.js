@@ -4,3 +4,5 @@ export * from './notes/notes';
 export * from './notes/sorted-notes';
 export * from './notes/search-result';
 export * from './flags/loading';
+export * from './users/user';
+export * from './users/users';

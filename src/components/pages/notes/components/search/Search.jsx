@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setValueSearchResult } from '../../../../../redux/actions';
 import { selectNotes } from '../../../../../redux/selectors';
 import styles from './Search.module.css';
+import { Input } from '../../../../markup-components';
 
 export const Search = () => {
 	const [searchText, setSearchText] = useState('');
@@ -34,8 +35,13 @@ export const Search = () => {
 
 	return (
 		<div className={styles.Search}>
-			<input type="text" placeholder="Search" value={searchText} onChange={handleSearchChange} />
-			<button>Search</button>
+			<Input
+				type="text"
+				placeholder="Search"
+				value={searchText}
+				onChange={handleSearchChange}
+				style={{ border: 'none', margin: '0', padding: '0' }}
+			/>
 		</div>
 	);
 };

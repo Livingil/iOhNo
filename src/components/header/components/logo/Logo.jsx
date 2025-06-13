@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Picturies } from './picturies/Picturies';
+import { logoName } from '../../../../utils';
 import styles from './Logo.module.css';
-import { useEffect, useState } from 'react';
 
 export const Logo = () => {
 	const [logoText, setLogoText] = useState('');
@@ -11,16 +12,7 @@ export const Logo = () => {
 	useEffect(() => {
 		const pathname = location.pathname;
 
-		switch (pathname) {
-			case '/':
-				setLogoText('');
-				break;
-			case '/notes':
-				setLogoText('Notes');
-				break;
-			default:
-				setLogoText('Неизвестная страница');
-		}
+		setLogoText(logoName(pathname));
 	}, [location.pathname]);
 
 	return (

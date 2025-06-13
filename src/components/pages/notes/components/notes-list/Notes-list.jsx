@@ -4,7 +4,7 @@ import { selectSortedNotes } from '../../../../../redux/selectors';
 import { deleteData, setNote } from '../../../../../redux/actions';
 import styles from './Notes-list.module.css';
 
-export const NotesList = () => {
+export const NotesList = ({ currentNotes }) => {
 	const dispatch = useDispatch();
 
 	const sortedNotes = useSelector(selectSortedNotes);
@@ -19,9 +19,11 @@ export const NotesList = () => {
 		dispatch(deleteData(adres, id));
 	};
 
+	const currentNotesList = currentNotes || sortedNotes;
+
 	return (
 		<div className={styles.scrollableList}>
-			{sortedNotes.map((note) => (
+			{currentNotesList.map((note) => (
 				<div key={note.id} className={styles.notesList} onClick={() => handleClickForValueNote(note)}>
 					<div className={styles.header}>
 						<div className={styles.noteTitle}>{note.title}</div>

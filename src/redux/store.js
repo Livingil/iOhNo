@@ -1,11 +1,15 @@
-import { reducerNotes, reducerError, reducerFlags } from './reducers';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { reducerNotes, reducerError, reducerFlags, reducerUsers, reducerUser } from './reducers';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
 
 const reducer = combineReducers({
+	users: reducerUsers,
+	user: reducerUser,
 	notes: reducerNotes,
 	error: reducerError,
 	flags: reducerFlags,
 });
 
-export const store = createStore(reducer, applyMiddleware(thunk));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
