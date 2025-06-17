@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { selectLoading, selectNotes, selectSortedNotes } from '../../../redux/selectors';
+import { selectLoading, selectSortedNotes } from '../../../redux/selectors';
 import { NotesList, NoteContent, Search } from './components';
 import { timeNow } from '../../../utils';
 import { dateNow } from '../../../utils';

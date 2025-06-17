@@ -4,29 +4,22 @@
       "id": "001",
       "login": "gardon",
       "password": "123456",
-      "registred_at": "05-11-2023",
+      "registered_at": "05.11.2023 19:45",
       "role_id": "001"
     },
     {
       "login": "oleg",
       "password": "123456",
-      "registed_at": "2328-10-10 09:42",
+      "registered_at": "10.10.2328 09:42",
       "role_id": "002",
       "id": "002"
     },
     {
-      "login": "ivan",
+      "login": "Daniil",
       "password": "123456",
-      "registed_at": "2834-09-28 22:53",
+      "registered_at": "11.02.2373 09:58",
       "role_id": "002",
-      "id": "Y6-JUdu"
-    },
-    {
-      "login": "gardon2",
-      "password": "123456",
-      "registed_at": "2488-01-27 16:30",
-      "role_id": "002",
-      "id": "iAq_6Tw"
+      "id": "J6KVXMy"
     }
   ],
   "roles": [

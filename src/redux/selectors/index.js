@@ -6,3 +6,4 @@ export * from './notes/search-result';
 export * from './flags/loading';
 export * from './users/user';
 export * from './users/users';
+export * from './users/user-hash';

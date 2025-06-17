@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-export const handlerClickVidgets = (adres) => {
+export const useClickVidgets = (adres) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {

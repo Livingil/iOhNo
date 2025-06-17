@@ -1,9 +1,9 @@
 import { HeaderReminder } from './components';
-import { handlerClickVidgets } from '../utils';
+import { useClickVidgets } from '../../../hooks';
 import styles from '../Vidgets.module.css';
 
 export const Reminders = () => {
-	const handleClick = handlerClickVidgets('/reminders');
+	const handleClick = useClickVidgets('/reminders');
 	return (
 		<div onClick={handleClick} className={styles.Vidgets}>
 			<HeaderReminder />

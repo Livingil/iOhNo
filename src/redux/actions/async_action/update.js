@@ -1,5 +1,5 @@
 import { dateNow, timeNow } from '../../../utils';
-import { setValueLoading, setError, setValueNotes, setNote } from '../../actions';
+import { setValueLoading, setError, setValueNotes } from '../../actions';
 import { selectNotes } from '../../selectors';
 
 export const reData = (id, adres, title, content) => {
