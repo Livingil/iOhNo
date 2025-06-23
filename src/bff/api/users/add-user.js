@@ -1,4 +1,4 @@
-import { generateDate } from '../../utils';
+import { dateNow } from '../../utils/date-now';
 
 export const addUser = (login, password) =>
 	fetch('http://localhost:3000/users', {
@@ -9,7 +9,7 @@ export const addUser = (login, password) =>
 		body: JSON.stringify({
 			login,
 			password,
-			registered_at: generateDate(),
+			registered_at: dateNow(),
 			role_id: '002',
 		}),
 	}).then((createdUser) => createdUser.json());

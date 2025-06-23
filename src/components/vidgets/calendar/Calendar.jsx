@@ -1,9 +1,9 @@
 import { HeaderCalendar } from './components';
-import { useClickVidgets } from '../../../hooks';
+import { useClickUrl } from '../../../hooks';
 import styles from '../Vidgets.module.css';
 
 export const Calendar = () => {
-	const handleClick = useClickVidgets('/calendar');
+	const handleClick = useClickUrl('/calendar');
 	return (
 		<div onClick={handleClick} className={styles.Vidgets}>
 			<HeaderCalendar />

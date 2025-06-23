@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { server } from '../bff';
 import { selectUserHash } from '../redux/selectors';
+import { server } from '../bff';
 
 export const useServerRequest = () => {
 	const hash = useSelector(selectUserHash);

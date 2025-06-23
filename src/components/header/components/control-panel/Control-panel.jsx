@@ -12,6 +12,11 @@ export const ControlPanel = () => {
 
 	const user = useSelector(selectUser);
 
+	const onLogout = () => {
+		dispatch(userLogout(user.hash));
+		sessionStorage.removeItem('userData');
+	};
+
 	return (
 		<div className={styles.ControlPanel}>
 			<div className={styles.userLogo}>
@@ -25,7 +30,7 @@ export const ControlPanel = () => {
 						<Link className={styles.profil} to="/profile">
 							{user.login}
 						</Link>
-						<div className={styles.logout} onClick={() => dispatch(userLogout(user.session))}>
+						<div className={styles.logout} onClick={onLogout}>
 							<Icon id="fa-sign-out" />
 						</div>
 					</>

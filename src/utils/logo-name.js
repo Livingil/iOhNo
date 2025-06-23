@@ -1,6 +1,7 @@
 export const logoName = (adresName) => {
 	if (adresName !== '/') {
-		const newAdresName = adresName[1].toUpperCase() + adresName.slice(2);
+		const newWordsName = adresName.slice(1).replaceAll('/', ' ').split(' ').slice(0, 2).join(' ');
+		const newAdresName = newWordsName[0].toUpperCase() + newWordsName.slice(1);
 		return newAdresName;
 	}
 	return;
