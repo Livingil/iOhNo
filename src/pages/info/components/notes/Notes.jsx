@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Content, Pagination, Search } from '../../../../components';
+import { Content, Loader, Pagination, Search } from '../../../../components';
 import { H2 } from '../../../../components/markup-components';
 import { NotesRow } from './components';
 import { useServerRequest } from '../../../../hooks';
 import { PAGINATION_LIMIT } from '../../../../constans';
 import { debounce, getLastPageFromLinks } from '../../../../utils';
 import styles from './Notes.module.css';
+import { useSelector } from 'react-redux';
+import { selectIsLoading, selectUserHash } from '../../../../redux/selectors';
 
 export const NotesPageInfo = () => {
 	const [notes, setNotes] = useState([]);
@@ -18,28 +20,30 @@ export const NotesPageInfo = () => {
 	const [page, setPage] = useState(1);
 	const [lastPage, setLastPage] = useState(1);
 
+	const hash = useSelector(selectUserHash);
+
 	const serverRequest = useServerRequest();
 
 	const handleSetPage = (data) => setPage(data);
 
 	useEffect(() => {
-		Promise.all([
-			serverRequest('fetchNotes', searchPhrase, page, PAGINATION_LIMIT),
-			serverRequest('fetchUsers'),
-		]).then(([notesRes, usersRes]) => {
-			if (usersRes.error || notesRes.error) {
-				setErrorMessage(usersRes.error || notesRes.error);
-				return;
-			}
+		if (hash) {
+			Promise.all([
+				serverRequest('fetchNotes', searchPhrase, page, PAGINATION_LIMIT),
+				serverRequest('fetchUsers'),
+			]).then(([notesRes, usersRes]) => {
+				if (usersRes.error || notesRes.error) {
+					setErrorMessage(usersRes.error || notesRes.error);
+					return;
+				}
 
-			setUsers(usersRes?.res);
-			setNotes(notesRes?.res?.notes);
+				setUsers(usersRes?.res);
+				setNotes(notesRes?.res?.notes);
 
-			setLastPage(getLastPageFromLinks(notesRes?.res.links));
-		});
-	}, [serverRequest, page, shouldSearch]);
-
-	console.log(users);
+				setLastPage(getLastPageFromLinks(notesRes?.res.links));
+			});
+		}
+	}, [serverRequest, page, shouldSearch, hash]);
 
 	const startDelayedSearch = useMemo(() => debounce(setShouldSearch, 2000), []);
 
@@ -48,13 +52,23 @@ export const NotesPageInfo = () => {
 		startDelayedSearch(!shouldSearch);
 	};
 
+	const isLoading = useSelector(selectIsLoading);
+
+	if (isLoading) {
+		return <Loader />;
+	}
 	return (
 		<div className={styles.NotesPageInfo}>
 			<Content error={errorMessage}>
 				<div>
 					<div className={styles.header}>
-						<H2 style={{ width: '30%' }}> Notes: </H2>
-						<Search searchPhrase={searchPhrase} onChange={onSearch} placeholderText={'Search for title'} />
+						<H2 style={{ width: '30%', margin: 'auto' }}> Notes: </H2>
+						<Search
+							style={{ padding: 'auto', margin: '0' }}
+							searchPhrase={searchPhrase}
+							onChange={onSearch}
+							placeholderText={'Search for title'}
+						/>
 					</div>
 
 					<div>

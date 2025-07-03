@@ -1,3 +1,5 @@
+import { transformNote } from '../../transformers';
+
 export const updateNote = ({ id, title, content }) =>
 	fetch(`http://localhost:3000/notes/${id}`, {
 		method: 'PATCH',
@@ -8,4 +10,6 @@ export const updateNote = ({ id, title, content }) =>
 			title,
 			content,
 		}),
-	}).then((loadedNote) => loadedNote.json());
+	})
+		.then((loadedNote) => loadedNote.json())
+		.then((loadedNote) => loadedNote && transformNote(loadedNote));

@@ -8,6 +8,12 @@ export const reducerNote = (state = initialStateNote, action) => {
 		case ACTION_TYPE.SET_NOTE: {
 			return { ...state, ...payload };
 		}
+		case ACTION_TYPE.LOGOUT: {
+			return initialStateNote;
+		}
+		case ACTION_TYPE.DELETE_NOTE: {
+			return initialStateNote;
+		}
 
 		default:
 			return state;

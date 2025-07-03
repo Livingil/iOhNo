@@ -1,16 +1,24 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUserHash } from '../redux/selectors';
 import { server } from '../bff';
+import { selectUserHash } from '../redux/selectors';
+import { setIsLoading } from '../redux/actions';
 
 export const useServerRequest = () => {
+	const dispatch = useDispatch();
 	const hash = useSelector(selectUserHash);
 
 	return useCallback(
-		(operation, ...params) => {
-			const request = ['register', 'autirize'].includes(operation) ? params : [hash, ...params];
-			return server[operation](...request);
+		async (operation, ...params) => {
+			dispatch(setIsLoading(true));
+
+			try {
+				const request = ['register', 'authorize'].includes(operation) ? params : [hash, ...params];
+				return await server[operation](...request);
+			} finally {
+				dispatch(setIsLoading(false));
+			}
 		},
-		[hash],
+		[dispatch, hash],
 	);
 };

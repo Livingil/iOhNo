@@ -8,6 +8,9 @@ export const reducerLoadUser = (state = initialStateLoadUser, action) => {
 		case ACTION_TYPE.SET_LOAD_USER: {
 			return { ...state, ...payload };
 		}
+		case ACTION_TYPE.LOGOUT: {
+			return initialStateLoadUser;
+		}
 
 		default:
 			return state;

@@ -13,7 +13,7 @@ export const saveNote = async (hash, newNoteData) => {
 		};
 	}
 
-	const saveNote = newNoteData.id === '' ? await addNote(newNoteData) : await updateNote(newNoteData);
+	const saveNote = typeof newNoteData.id === 'number' ? await addNote(newNoteData) : await updateNote(newNoteData);
 
 	return { error: null, res: saveNote };
 };

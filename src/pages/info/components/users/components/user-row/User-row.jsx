@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Icon } from '../../../../../../components';
+import { Icon, Loader } from '../../../../../../components';
 import { useClickUrl, useServerRequest } from '../../../../../../hooks';
 import styles from './User-row.module.css';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsLoading } from '../../../../../../redux/selectors';
 
 export const UserRow = ({ user, roles, onUserRemove }) => {
 	const [initialRoleId, setInitialRoleId] = useState(user.roleId);
@@ -20,6 +21,12 @@ export const UserRow = ({ user, roles, onUserRemove }) => {
 			setInitialRoleId(newUserRoleId);
 		});
 	};
+
+	const isLoading = useSelector(selectIsLoading);
+
+	if (isLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<div onClick={useClickUrl(`/info/users/${user.id}`)} className={styles.tableRow}>

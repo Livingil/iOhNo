@@ -13,6 +13,7 @@
 		transform 0.3s ease,
 		box-shadow 0.3s ease;
 	padding: 20px;
+	margin-bottom: 0;
 }
 
 .NoteContent,
@@ -63,4 +64,15 @@
 
 .saveIcon :hover {
 	color: #007bff;
+}
+
+.buttonSave:hover {
+	cursor: pointer;
+	color: #007bff;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.5;
+	cursor: not-allowed;
 }

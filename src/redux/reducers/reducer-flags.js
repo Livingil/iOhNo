@@ -9,8 +9,9 @@ export const reducerFlags = (state = initialStateFlags, action) => {
 			return { ...state, wasLogout: !state.wasLogout };
 		}
 		case ACTION_TYPE.SET_IS_LOADING: {
-			return { ...state, isLoading: !state.isLoading };
+			return { ...state, isLoading: payload };
 		}
+
 		default:
 			return state;
 	}

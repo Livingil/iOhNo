@@ -2,7 +2,7 @@ import { Icon } from '../icon/Icon';
 import { Input } from '../markup-components';
 import styles from './Search.module.css';
 
-export const Search = ({ searchPhrase, onChange, placeholderText }) => {
+export const Search = ({ searchPhrase, onChange, placeholderText, ...params }) => {
 	return (
 		<div className={styles.Search}>
 			<Input

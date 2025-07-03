@@ -15,6 +15,7 @@ export const ControlPanel = () => {
 	const onLogout = () => {
 		dispatch(userLogout(user.hash));
 		sessionStorage.removeItem('userData');
+		navigate('/');
 	};
 
 	return (

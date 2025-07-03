@@ -4,6 +4,8 @@ export * from './user/set-user';
 export * from './user/set-load-user';
 export * from './flags/set-is-loading';
 export * from './note/set-note';
+export * from './note/delete-note';
+export * from './notes/set-notes';
 export * from './async-action/note/load-note';
 export * from './async-action/note/save-note';
 export * from './async-action/note/remove-note';

@@ -1,3 +1,4 @@
+import { transformNote } from '../../transformers';
 import { dateNow } from '../../utils/date-now';
 import { timeNow } from '../../utils/time-now';
 
@@ -14,4 +15,6 @@ export const addNote = ({ title, content, authorId }) =>
 			time_creation_at: timeNow(),
 			author_id: authorId,
 		}),
-	}).then((createdNote) => createdNote.json());
+	})
+		.then((createdNote) => createdNote.json())
+		.then((createdNote) => createdNote && transformNote(createdNote));

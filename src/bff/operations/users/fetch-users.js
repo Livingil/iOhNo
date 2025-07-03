@@ -6,6 +6,7 @@ export const fetchUsers = async (hash, searchPhrase, page, limit) => {
 	const accessRoles = [ROLE.ADMIN];
 
 	const access = await sessions.access(hash, accessRoles);
+
 	if (!access) {
 		return {
 			error: 'Access denied',

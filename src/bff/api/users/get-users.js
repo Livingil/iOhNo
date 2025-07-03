@@ -1,8 +1,6 @@
 import { transformUser } from '../../transformers';
 
 export const getUsers = (searchPhrase = '', page, limit) => {
-	console.log(searchPhrase);
-
 	if (page === undefined || limit === undefined) {
 		limit = 1000;
 	}

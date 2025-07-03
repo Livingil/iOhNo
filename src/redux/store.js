@@ -1,9 +1,10 @@
-import { reducerFlags, reducerLoadUser, reducerNote, reducerUser } from './reducers';
+import { reducerFlags, reducerLoadUser, reducerNote, reducerNotes, reducerUser } from './reducers';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
 
 const reducer = combineReducers({
 	note: reducerNote,
+	notes: reducerNotes,
 	user: reducerUser,
 	loadUser: reducerLoadUser,
 	flags: reducerFlags,

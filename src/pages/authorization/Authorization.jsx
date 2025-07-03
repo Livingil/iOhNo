@@ -29,8 +29,6 @@ export const Authorization = () => {
 
 	const user = useSelector(selectUser);
 
-	console.log(user);
-
 	useResetForm(reset);
 
 	const onSubmit = ({ login, password }) => {
@@ -41,6 +39,7 @@ export const Authorization = () => {
 			}
 
 			dispatch(setUser(res));
+
 			sessionStorage.setItem('userData', JSON.stringify(res));
 		});
 	};

@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Icon } from '../../../../../../components';
+import { Icon, Loader } from '../../../../../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useServerRequest } from '../../../../../../hooks';
 import { loadNote, removeNote, saveNote } from '../../../../../../redux/actions';
-import { selectNote, selectUser } from '../../../../../../redux/selectors';
+import { selectIsLoading, selectNote, selectUser } from '../../../../../../redux/selectors';
 import styles from './Note.module.css';
 
 export const NotePageInfo = () => {
@@ -44,6 +44,12 @@ export const NotePageInfo = () => {
 	const onNoteRemove = () => {
 		dispatch(removeNote(serverRequest, note.id)).then(() => navigate(-1));
 	};
+
+	const isLoading = useSelector(selectIsLoading);
+
+	if (isLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<div className={styles.NotePageInfo}>

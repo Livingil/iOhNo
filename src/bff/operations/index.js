@@ -10,3 +10,4 @@ export * from './notes/fetch-notes';
 export * from './notes/fetch-note';
 export * from './notes/save-note';
 export * from './notes/remove-note';
+export * from './notes/fetch-user-notes';

@@ -1,61 +1,80 @@
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useEffect, useState } from 'react';
-// import { selectNote, selectSortedNotes, selectUser } from '../../../../redux/selectors';
-// import { create, reData, setNote } from '../../../../redux/actions';
-// import { Icon } from '../../../../components';
-// import styles from './Note-content.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { selectNote, selectNotes, selectUser } from '../../../../redux/selectors';
+import { Icon } from '../../../../components';
+import { saveNote } from '../../../../redux/actions';
+import { useServerRequest } from '../../../../hooks';
+import styles from './Note-content.module.css';
 
-export const NoteContent = () => {
-	// const [textTitle, setTextTitle] = useState('');
-	// const [textContent, setTextContent] = useState('');
-	// const dispatch = useDispatch();
-	// const user = useSelector(selectUser);
-	// const note = useSelector(selectNote);
-	// const notes = useSelector(selectSortedNotes);
-	// const noteDefault = currentNotes[0] || notes[0];
-	// const handleChange = (event, setter) => {
-	// 	setter(event.target.value);
-	// };
-	// useEffect(() => {
-	// 	setTextTitle(note?.title ?? noteDefault?.title ?? '');
-	// 	setTextContent(note?.content ?? noteDefault?.content ?? '');
-	// }, [note, noteDefault]);
-	// const handleSaveNote = () => {
-	// 	event.preventDefault();
-	// 	if (flagNewNoteButton || !noteDefault) {
-	// 		dispatch(create(textTitle, textContent, 'notes', user.id));
-	// 		handleCurrentNotes('');
-	// 	} else {
-	// 		dispatch(reData(note.id || noteDefault.id, 'notes', textTitle, textContent));
-	// 		dispatch(setNote([]));
-	// 	}
-	// 	handleSetFlagNewNoteButton(false);
-	// };
-	// return (
-	// 	<form className={styles.form} onSubmit={handleSaveNote}>
-	// 		<div className={styles.header}>
-	// 			<textarea
-	// 				className={styles.NoteTitle}
-	// 				required
-	// 				name="noteTitle"
-	// 				id="noteTitleId"
-	// 				placeholder="Enter title"
-	// 				value={textTitle === 'New note' ? '' : textTitle}
-	// 				onChange={(event) => handleChange(event, setTextTitle)}
-	// 			></textarea>
-	// 			<button className={styles.saveIcon} type="submit">
-	// 				<Icon id="fa-floppy-o" />
-	// 			</button>
-	// 		</div>
-	// 		<textarea
-	// 			className={styles.NoteContent}
-	// 			required
-	// 			name="noteContent"
-	// 			id="noteContentId"
-	// 			placeholder="Enter content"
-	// 			value={textContent === 'Your text' ? '' : textContent}
-	// 			onChange={(event) => handleChange(event, setTextContent)}
-	// 		></textarea>
-	// 	</form>
-	// );
+export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) => {
+	const [textTitle, setTextTitle] = useState('');
+	const [textContent, setTextContent] = useState('');
+
+	const dispatch = useDispatch();
+
+	const serverRequest = useServerRequest();
+
+	const user = useSelector(selectUser);
+	const note = useSelector(selectNote);
+	const notes = useSelector(selectNotes);
+
+	const noteDefault = notes[0];
+
+	const handleChange = (event, setter) => {
+		setter(event.target.value);
+	};
+
+	useEffect(() => {
+		setTextTitle(note?.title ?? noteDefault?.title ?? '');
+		setTextContent(note?.content ?? noteDefault?.content ?? '');
+	}, [note, noteDefault]);
+
+	useEffect(() => {
+		const isSame = note && note?.title === textTitle && note?.content === textContent;
+		handleSetFlagNewNoteButton(isSame);
+	}, [handleSetFlagNewNoteButton, textTitle, textContent, note]);
+
+	const handleSaveNote = (event) => {
+		event.preventDefault();
+		dispatch(
+			saveNote(
+				serverRequest,
+				{
+					id: note.id || noteDefault.id,
+					title: textTitle,
+					content: textContent,
+					authorId: user.id,
+				},
+				notes,
+			),
+		);
+	};
+
+	return (
+		<form className={styles.form}>
+			<div className={styles.header}>
+				<textarea
+					className={styles.NoteTitle}
+					required
+					name="noteTitle"
+					id="noteTitleId"
+					placeholder="Enter title"
+					value={textTitle === 'New note' ? '' : textTitle}
+					onChange={(event) => handleChange(event, setTextTitle)}
+				></textarea>
+				<div className={flagNewNoteButton ? styles.disabled : styles.buttonSave}>
+					<Icon id="fa-floppy-o" onClick={() => handleSaveNote(event)} />
+				</div>
+			</div>
+			<textarea
+				className={styles.NoteContent}
+				required
+				name="noteContent"
+				id="noteContentId"
+				placeholder="Enter content"
+				value={textContent === 'Your text' ? '' : textContent}
+				onChange={(event) => handleChange(event, setTextContent)}
+			></textarea>
+		</form>
+	);
 };

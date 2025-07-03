@@ -5,10 +5,16 @@ import { H2 } from '../../../../../../components/markup-components';
 import { ROLE } from '../../../../../../constans';
 import styles from './User.module.css';
 
+import { selectIsLoading } from '../../../../../../redux/selectors';
+import { Loader } from '../../../../../../components';
+import { useSelector } from 'react-redux';
+
 export const UserPageInfo = () => {
 	const [notes, setNotes] = useState([]);
 	const [user, setUser] = useState({});
 	const [errorMessage, setErrorMessage] = useState(null);
+
+	const isLoading = useSelector(selectIsLoading);
 
 	const params = useParams();
 	const serverRequest = useServerRequest();
@@ -29,13 +35,14 @@ export const UserPageInfo = () => {
 
 	const role = Object.keys(ROLE).find((key) => ROLE[key] === user?.roleId);
 
-	console.log(user);
-	console.log(notes);
-
 	const userNotes = notes.filter((note) => note.authorId === user.id);
 
 	if (errorMessage) {
 		return <div>Error: {errorMessage}</div>;
+	}
+
+	if (isLoading) {
+		return <Loader />;
 	}
 
 	return (
@@ -55,7 +62,7 @@ export const UserPageInfo = () => {
 					Role:<div className={styles.infoText}>{role}</div>
 				</div>
 			</div>
-			<H2 style={{ width: '30%' }}> Number of notes: {userNotes.length}</H2>
+			<H2 style={{ width: '40%' }}> Number of notes: {userNotes.length}</H2>
 		</div>
 	);
 };
