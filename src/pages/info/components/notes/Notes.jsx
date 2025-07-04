@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Content, Loader, Pagination, Search } from '../../../../components';
+import { PrivateContent, Loader, Pagination, Search } from '../../../../components';
 import { H2 } from '../../../../components/markup-components';
 import { NotesRow } from './components';
 import { useServerRequest } from '../../../../hooks';
@@ -52,6 +52,18 @@ export const NotesPageInfo = () => {
 		startDelayedSearch(!shouldSearch);
 	};
 
+	const handleNoteDelete = (deletedNoteId) => {
+		setNotes((prevNotes) => {
+			const updatedNotes = prevNotes.filter((note) => note.id !== deletedNoteId);
+
+			if (updatedNotes.length === 0 && page > 1) {
+				setPage(page - 1);
+			}
+
+			return updatedNotes;
+		});
+	};
+
 	const isLoading = useSelector(selectIsLoading);
 
 	if (isLoading) {
@@ -59,7 +71,7 @@ export const NotesPageInfo = () => {
 	}
 	return (
 		<div className={styles.NotesPageInfo}>
-			<Content error={errorMessage}>
+			<PrivateContent error={errorMessage}>
 				<div>
 					<div className={styles.header}>
 						<H2 style={{ width: '30%', margin: 'auto' }}> Notes: </H2>
@@ -79,7 +91,12 @@ export const NotesPageInfo = () => {
 								<div className={styles.pubAtColumn}>Publication date</div>
 							</div>
 							{notes.map((note) => (
-								<NotesRow key={note.id} note={note} users={users.users} />
+								<NotesRow
+									key={note.id}
+									note={note}
+									users={users.users}
+									handleNoteDelete={handleNoteDelete}
+								/>
 							))}
 							{lastPage > 1 && notes.length > 0 && (
 								<Pagination handleSetPage={handleSetPage} page={page} lastPage={lastPage} />
@@ -87,7 +104,7 @@ export const NotesPageInfo = () => {
 						</div>
 					</div>
 				</div>
-			</Content>
+			</PrivateContent>
 		</div>
 	);
 };

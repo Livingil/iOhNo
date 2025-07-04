@@ -11,6 +11,9 @@ export const reducerFlags = (state = initialStateFlags, action) => {
 		case ACTION_TYPE.SET_IS_LOADING: {
 			return { ...state, isLoading: payload };
 		}
+		case ACTION_TYPE.SET_TRIGGER_NEW_NOTE: {
+			return { ...state, triggerNewNote: payload };
+		}
 
 		default:
 			return state;

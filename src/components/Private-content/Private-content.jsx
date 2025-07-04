@@ -1,7 +1,7 @@
 import { H2 } from '../markup-components';
-import styles from './Content.module.css';
+import styles from './Private-content.module.css';
 
-export const Content = ({ children, error }) =>
+export const PrivateContent = ({ children, error }) =>
 	error ? (
 		<div className={styles.Content}>
 			<H2> Error: </H2>

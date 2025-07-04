@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Icon, Loader } from '../../../../../../components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useServerRequest } from '../../../../../../hooks';
 import { loadNote, removeNote, saveNote } from '../../../../../../redux/actions';
 import { selectIsLoading, selectNote, selectUser } from '../../../../../../redux/selectors';
+import { Textarea } from '../../../../../../components/markup-components';
 import styles from './Note.module.css';
 
 export const NotePageInfo = () => {
@@ -68,25 +69,17 @@ export const NotePageInfo = () => {
 			</div>
 			<form className={styles.form}>
 				<div className={styles.header}>
-					<textarea
-						className={styles.NoteTitle}
-						required
-						name="noteTitle"
-						id="noteTitleId"
-						placeholder="Enter title"
-						value={textTitle || ''}
+					<Textarea
+						className={'NoteTitle'}
+						value={textTitle}
 						onChange={(event) => handleChange(event, setTextTitle)}
-					></textarea>
+					/>
 				</div>
-				<textarea
-					className={styles.NoteContent}
-					required
-					name="noteContent"
-					id="noteContentId"
-					placeholder="Enter content"
-					value={textContent || ''}
+				<Textarea
+					className={'NoteContent'}
+					value={textContent}
 					onChange={(event) => handleChange(event, setTextContent)}
-				></textarea>
+				/>
 			</form>
 		</div>
 	);

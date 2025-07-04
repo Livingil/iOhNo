@@ -26,7 +26,7 @@ export const Routs = () => {
 			<Route path="/vidgets" element={<div>Vidgets</div>} />
 			<Route path="/weather" element={<div>Weather</div>} />
 			<Route path="/calendar" element={<div>Сalendar</div>} />
-			<Route path="/create-note" element={<div>Create note</div>} />
+			{/* <Route path="/create-note" element={<div>Create note</div>} /> */}
 			<Route path="/create-event" element={<div>Create event</div>} />
 			<Route path="/create-reminder" element={<div>Create reminder</div>} />
 

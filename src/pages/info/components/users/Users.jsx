@@ -4,7 +4,7 @@ import { UserRow } from './components';
 import { useServerRequest } from '../../../../hooks';
 import { PAGINATION_LIMIT, ROLE } from '../../../../constans';
 import { H2 } from '../../../../components/markup-components';
-import { Content, Loader, Pagination, Search } from '../../../../components';
+import { PrivateContent, Loader, Pagination, Search } from '../../../../components';
 import { debounce, getLastPageFromLinks } from '../../../../utils';
 import { selectIsLoading, selectUserHash } from '../../../../redux/selectors';
 import styles from './Users.module.css';
@@ -67,7 +67,7 @@ export const UsersPageInfo = () => {
 
 	return (
 		<div className={styles.UsersPage}>
-			<Content error={errorMessage}>
+			<PrivateContent error={errorMessage}>
 				<div>
 					<div className={styles.header}>
 						<H2 style={{ width: '30%', margin: 'auto' }}> Users: </H2>
@@ -94,7 +94,7 @@ export const UsersPageInfo = () => {
 						</div>
 					</div>
 				</div>
-			</Content>
+			</PrivateContent>
 		</div>
 	);
 };

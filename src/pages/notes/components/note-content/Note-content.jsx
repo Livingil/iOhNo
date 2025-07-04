@@ -5,6 +5,7 @@ import { Icon } from '../../../../components';
 import { saveNote } from '../../../../redux/actions';
 import { useServerRequest } from '../../../../hooks';
 import styles from './Note-content.module.css';
+import { Textarea } from '../../../../components/markup-components';
 
 export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) => {
 	const [textTitle, setTextTitle] = useState('');
@@ -53,28 +54,20 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 	return (
 		<form className={styles.form}>
 			<div className={styles.header}>
-				<textarea
-					className={styles.NoteTitle}
-					required
-					name="noteTitle"
-					id="noteTitleId"
-					placeholder="Enter title"
-					value={textTitle === 'New note' ? '' : textTitle}
+				<Textarea
+					className={'NoteTitle'}
+					value={textTitle}
 					onChange={(event) => handleChange(event, setTextTitle)}
-				></textarea>
+				/>
 				<div className={flagNewNoteButton ? styles.disabled : styles.buttonSave}>
 					<Icon id="fa-floppy-o" onClick={() => handleSaveNote(event)} />
 				</div>
 			</div>
-			<textarea
-				className={styles.NoteContent}
-				required
-				name="noteContent"
-				id="noteContentId"
-				placeholder="Enter content"
-				value={textContent === 'Your text' ? '' : textContent}
+			<Textarea
+				className={'NoteContent'}
+				value={textContent}
 				onChange={(event) => handleChange(event, setTextContent)}
-			></textarea>
+			/>
 		</form>
 	);
 };
