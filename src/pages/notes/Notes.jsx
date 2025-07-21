@@ -5,9 +5,10 @@ import { NotesList, NoteContent } from './components';
 import { selectIsLoading, selectNotes, selectTriggerNewNote, selectUser, selectUserHash } from '../../redux/selectors';
 import { setNote, setNotes, setTriggerNewNote } from '../../redux/actions';
 import { dateNow, timeNow } from '../../utils';
-import { PrivateContent, Loader, Search } from '../../components';
+import { ErrorContent, Loader, Search } from '../../components';
 import { Button } from '../../components/markup-components';
 import styles from './Notes.module.css';
+import { ROLE } from '../../constans';
 
 export const NotesPage = () => {
 	const [flagNewNoteButton, setFlagNewNoteButton] = useState(true);
@@ -85,14 +86,12 @@ export const NotesPage = () => {
 		}
 	}, [dispatch, triggerNewNoteFlag]);
 
-	console.log('1');
-
 	if (isLoading) {
 		return <Loader />;
 	}
 
 	return (
-		<PrivateContent error={errorMessage}>
+		<ErrorContent access={[ROLE.ADMIN, ROLE.USER]} error={errorMessage}>
 			<div className={styles.NotesPage}>
 				<div className={styles.notesList}>
 					<Search onChange={onSearch} />
@@ -115,6 +114,6 @@ export const NotesPage = () => {
 					handleSetFlagNewNoteButton={handleSetFlagNewNoteButton}
 				/>
 			</div>
-		</PrivateContent>
+		</ErrorContent>
 	);
 };

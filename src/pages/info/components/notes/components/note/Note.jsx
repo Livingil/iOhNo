@@ -1,21 +1,26 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Icon, Loader } from '../../../../../../components';
+import { Icon, Loader, ErrorContent } from '../../../../../../components';
 import { useServerRequest } from '../../../../../../hooks';
 import { loadNote, removeNote, saveNote } from '../../../../../../redux/actions';
 import { selectIsLoading, selectNote, selectUser } from '../../../../../../redux/selectors';
 import { Textarea } from '../../../../../../components/markup-components';
 import styles from './Note.module.css';
+import { ROLE } from '../../../../../../constans';
 
 export const NotePageInfo = () => {
+	const [error, setError] = useState(true);
+
 	const params = useParams();
 	const dispatch = useDispatch();
 	const serverRequest = useServerRequest();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(loadNote(serverRequest, params.id));
+		dispatch(loadNote(serverRequest, params.id)).then((noteData) => {
+			setError(noteData.error);
+		});
 	}, [dispatch, serverRequest, params]);
 
 	const note = useSelector(selectNote);
@@ -53,34 +58,36 @@ export const NotePageInfo = () => {
 	}
 
 	return (
-		<div className={styles.NotePageInfo}>
-			<div className={styles.header}>
-				<div className={styles.creationAt}>
-					<Icon id="fa-calendar-o" /> {note.creationAt} {note.timeCreationAt}
-				</div>
-				<div className={styles.buttons}>
-					<div className={saveDisabled ? styles.disabled : styles.buttonSave}>
-						<Icon id="fa-floppy-o" onClick={onNoteSave} />
-					</div>
-					<div className={styles.buttonTrash}>
-						<Icon id="fa-trash-o" onClick={onNoteRemove} />
-					</div>
-				</div>
-			</div>
-			<form className={styles.form}>
+		<ErrorContent access={ROLE.ADMIN} error={error}>
+			<div className={styles.NotePageInfo}>
 				<div className={styles.header}>
-					<Textarea
-						className={'NoteTitle'}
-						value={textTitle}
-						onChange={(event) => handleChange(event, setTextTitle)}
-					/>
+					<div className={styles.creationAt}>
+						<Icon id="fa-calendar-o" /> {note.creationAt} {note.timeCreationAt}
+					</div>
+					<div className={styles.buttons}>
+						<div className={saveDisabled ? styles.disabled : styles.buttonSave}>
+							<Icon id="fa-floppy-o" onClick={onNoteSave} />
+						</div>
+						<div className={styles.buttonTrash}>
+							<Icon id="fa-trash-o" onClick={onNoteRemove} />
+						</div>
+					</div>
 				</div>
-				<Textarea
-					className={'NoteContent'}
-					value={textContent}
-					onChange={(event) => handleChange(event, setTextContent)}
-				/>
-			</form>
-		</div>
+				<form className={styles.form}>
+					<div className={styles.header}>
+						<Textarea
+							className={'NoteTitle'}
+							value={textTitle || ''}
+							onChange={(event) => handleChange(event, setTextTitle)}
+						/>
+					</div>
+					<Textarea
+						className={'NoteContent'}
+						value={textContent || ''}
+						onChange={(event) => handleChange(event, setTextContent)}
+					/>
+				</form>
+			</div>
+		</ErrorContent>
 	);
 };

@@ -3,6 +3,8 @@ import { Authorization, HomePage, InfoPage, NotesPage, ProfilePage, Registration
 import { NotesPageInfo, UsersPageInfo } from '../pages/info/components';
 import { NotePageInfo } from '../pages/info/components/notes/components';
 import { UserPageInfo } from '../pages/info/components/users/components';
+import { ErrorContent } from '../components';
+import { ERROR } from '../constans';
 
 export const Routs = () => {
 	return (
@@ -30,7 +32,7 @@ export const Routs = () => {
 			<Route path="/create-event" element={<div>Create event</div>} />
 			<Route path="/create-reminder" element={<div>Create reminder</div>} />
 
-			<Route path="*" element={<div>Error</div>} />
+			<Route path="*" element={<ErrorContent error={ERROR.PAGE_NOT_EXIST} />} />
 		</Routes>
 	);
 };

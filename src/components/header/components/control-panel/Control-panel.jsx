@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../../../redux/selectors';
 import { Link, useNavigate } from 'react-router-dom';
+import { selectUser } from '../../../../redux/selectors';
 import { Icon } from '../../../icon/Icon';
 import { ROLE } from '../../../../constans';
 import { userLogout } from '../../../../redux/actions';
 import styles from './Control-panel.module.css';
+import { checkAccess } from '../../../../utils';
 
 export const ControlPanel = () => {
 	const navigate = useNavigate();
@@ -17,6 +18,8 @@ export const ControlPanel = () => {
 		sessionStorage.removeItem('userData');
 		navigate('/');
 	};
+
+	const isAdmin = checkAccess([ROLE.ADMIN], user.roleId);
 
 	return (
 		<div className={styles.ControlPanel}>
@@ -47,9 +50,11 @@ export const ControlPanel = () => {
 				<Link to="/vidgets" className={styles.button}>
 					<Icon id="fa-th" />
 				</Link>
-				<Link to="/info" className={styles.button}>
-					<Icon id="fa-info-circle" />
-				</Link>
+				{isAdmin && (
+					<Link to="/info" className={styles.button}>
+						<Icon id="fa-info-circle" />
+					</Link>
+				)}
 			</div>
 		</div>
 	);

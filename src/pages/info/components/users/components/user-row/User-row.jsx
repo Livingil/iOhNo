@@ -8,7 +8,9 @@ import { selectIsLoading } from '../../../../../../redux/selectors';
 export const UserRow = ({ user, roles, onUserRemove }) => {
 	const [initialRoleId, setInitialRoleId] = useState(user.roleId);
 	const [selectedRoleId, setSelectedRoleId] = useState(user.roleId);
+
 	const serverRequest = useServerRequest();
+	const clickUrl = useClickUrl(`/info/users/${user.id}`);
 
 	const inSaveButtonDisabled = selectedRoleId === initialRoleId;
 
@@ -29,7 +31,7 @@ export const UserRow = ({ user, roles, onUserRemove }) => {
 	}
 
 	return (
-		<div onClick={useClickUrl(`/info/users/${user.id}`)} className={styles.tableRow}>
+		<div onClick={clickUrl} className={styles.tableRow}>
 			<div className={styles.loginColumn}>{user.login}</div>
 			<div className={styles.regAtColumn}>{user.registeredAt}</div>
 			<div className={styles.roleColumn} onClick={(e) => e.stopPropagation()}>

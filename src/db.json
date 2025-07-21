@@ -29,13 +29,6 @@
       "id": "J6KVMy"
     },
     {
-      "login": "Kirill",
-      "password": "123456",
-      "registered_at": "01.01.2113 01:18",
-      "role_id": "002",
-      "id": "J6KVXM"
-    },
-    {
       "login": "Darina",
       "password": "123456",
       "registered_at": "17.07.2773 07:57",
@@ -393,61 +386,5 @@
       "content": "Date"
     }
   ],
-  "sessions": [
-    {
-      "hash": "0.30098693838331880279213237372459843754768371582031",
-      "user": {
-        "id": "J6KVXMy",
-        "login": "Daniil",
-        "password": "123456",
-        "registeredAt": "11.02.2373 09:58",
-        "roleId": "002"
-      },
-      "id": 1
-    },
-    {
-      "hash": "0.97093752233470376200585860715364105999469757080078",
-      "user": {
-        "id": "J6KVXMy",
-        "login": "Daniil",
-        "password": "123456",
-        "registeredAt": "11.02.2373 09:58",
-        "roleId": "002"
-      },
-      "id": 2
-    },
-    {
-      "hash": "0.39491999201841687661129753905697725713253021240234",
-      "user": {
-        "id": "J6KVXMy",
-        "login": "Daniil",
-        "password": "123456",
-        "registeredAt": "11.02.2373 09:58",
-        "roleId": "002"
-      },
-      "id": 3
-    },
-    {
-      "hash": "0.89714986970473387106750351449591107666492462158203",
-      "user": {
-        "id": "001",
-        "login": "gardon",
-        "password": "123456",
-        "registeredAt": "05.11.2023 19:45",
-        "roleId": "001"
-      },
-      "id": 4
-    },
-    {
-      "hash": "0.59776236808291971502882233835407532751560211181641",
-      "user": {
-        "id": "J6KVXMy",
-        "login": "Daniil",
-        "password": "123456",
-        "registeredAt": "11.02.2373 09:58",
-        "roleId": "002"
-      },
-      "id": 5
-    }
-  ]
+  "sessions": []
 }

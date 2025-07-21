@@ -13,7 +13,21 @@ export const fetchNote = async (hash, noteId) => {
 		};
 	}
 
-	const note = await getNote(noteId);
+	let note;
+	let error;
+
+	try {
+		note = await getNote(noteId);
+	} catch (noteError) {
+		error = noteError;
+	}
+
+	if (error) {
+		return {
+			error,
+			res: null,
+		};
+	}
 
 	return {
 		error: null,

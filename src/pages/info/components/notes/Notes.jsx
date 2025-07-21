@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { PrivateContent, Loader, Pagination, Search } from '../../../../components';
+import { useSelector } from 'react-redux';
+import { ErrorContent, Loader, Pagination, Search } from '../../../../components';
 import { H2 } from '../../../../components/markup-components';
 import { NotesRow } from './components';
 import { useServerRequest } from '../../../../hooks';
-import { PAGINATION_LIMIT } from '../../../../constans';
-import { debounce, getLastPageFromLinks } from '../../../../utils';
+import { PAGINATION_LIMIT, ROLE } from '../../../../constans';
+import { checkAccess, debounce, getLastPageFromLinks } from '../../../../utils';
+import { selectIsLoading, selectUser, selectUserHash } from '../../../../redux/selectors';
 import styles from './Notes.module.css';
-import { useSelector } from 'react-redux';
-import { selectIsLoading, selectUserHash } from '../../../../redux/selectors';
 
 export const NotesPageInfo = () => {
 	const [notes, setNotes] = useState([]);
@@ -21,12 +21,16 @@ export const NotesPageInfo = () => {
 	const [lastPage, setLastPage] = useState(1);
 
 	const hash = useSelector(selectUserHash);
+	const user = useSelector(selectUser);
 
 	const serverRequest = useServerRequest();
 
 	const handleSetPage = (data) => setPage(data);
 
 	useEffect(() => {
+		if (!checkAccess([ROLE.ADMIN], user.roleId)) {
+			return;
+		}
 		if (hash) {
 			Promise.all([
 				serverRequest('fetchNotes', searchPhrase, page, PAGINATION_LIMIT),
@@ -43,7 +47,7 @@ export const NotesPageInfo = () => {
 				setLastPage(getLastPageFromLinks(notesRes?.res.links));
 			});
 		}
-	}, [serverRequest, page, shouldSearch, hash]);
+	}, [serverRequest, page, shouldSearch, user.roleId, hash]);
 
 	const startDelayedSearch = useMemo(() => debounce(setShouldSearch, 2000), []);
 
@@ -71,7 +75,7 @@ export const NotesPageInfo = () => {
 	}
 	return (
 		<div className={styles.NotesPageInfo}>
-			<PrivateContent error={errorMessage}>
+			<ErrorContent serverError={errorMessage} access={ROLE.ADMIN}>
 				<div>
 					<div className={styles.header}>
 						<H2 style={{ width: '30%', margin: 'auto' }}> Notes: </H2>
@@ -104,7 +108,7 @@ export const NotesPageInfo = () => {
 						</div>
 					</div>
 				</div>
-			</PrivateContent>
+			</ErrorContent>
 		</div>
 	);
 };

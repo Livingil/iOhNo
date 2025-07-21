@@ -13,7 +13,21 @@ export const fetchUser = async (hash, userId) => {
 		};
 	}
 
-	const loadUser = await getLoadUser(userId);
+	let loadUser;
+	let error;
+
+	try {
+		loadUser = await getLoadUser(userId);
+	} catch (loadUserError) {
+		error = loadUserError;
+	}
+
+	if (error) {
+		return {
+			error,
+			res: null,
+		};
+	}
 
 	return {
 		error: null,

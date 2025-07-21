@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DoneRow } from './components';
 import { useServerRequest } from '../../../../hooks';
 import { ROLE } from '../../../../constans';
-import { PrivateContent } from '../../../../components';
+import { ErrorContent } from '../../../../components';
 import styles from './Done.module.css';
 
 export const DonePage = () => {
@@ -33,7 +33,7 @@ export const DonePage = () => {
 
 	return (
 		<div className={styles.DonePage}>
-			<PrivateContent error={errorMessage}>
+			<ErrorContent error={errorMessage}>
 				<div>
 					<div>
 						<div className={styles.table}>
@@ -53,7 +53,7 @@ export const DonePage = () => {
 						</div>
 					</div>
 				</div>
-			</PrivateContent>
+			</ErrorContent>
 		</div>
 	);
 };

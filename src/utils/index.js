@@ -4,3 +4,4 @@ export * from './get-last-page-from-links.js';
 export * from './debounce.js';
 export * from './date-now.js';
 export * from './time-now.js';
+export * from './check-access.js';

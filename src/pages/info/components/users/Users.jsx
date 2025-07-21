@@ -4,9 +4,9 @@ import { UserRow } from './components';
 import { useServerRequest } from '../../../../hooks';
 import { PAGINATION_LIMIT, ROLE } from '../../../../constans';
 import { H2 } from '../../../../components/markup-components';
-import { PrivateContent, Loader, Pagination, Search } from '../../../../components';
-import { debounce, getLastPageFromLinks } from '../../../../utils';
-import { selectIsLoading, selectUserHash } from '../../../../redux/selectors';
+import { ErrorContent, Loader, Pagination, Search } from '../../../../components';
+import { checkAccess, debounce, getLastPageFromLinks } from '../../../../utils';
+import { selectIsLoading, selectUser, selectUserHash } from '../../../../redux/selectors';
 import styles from './Users.module.css';
 
 export const UsersPageInfo = () => {
@@ -15,6 +15,8 @@ export const UsersPageInfo = () => {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
 
+	const [isLocalLoading, setIsLocalLoading] = useState(false);
+
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [shouldSearch, setShouldSearch] = useState(false);
 
@@ -22,13 +24,18 @@ export const UsersPageInfo = () => {
 	const [lastPage, setLastPage] = useState(1);
 
 	const hash = useSelector(selectUserHash);
+	const user = useSelector(selectUser);
 
 	const handleSetPage = (data) => setPage(data);
 
 	const serverRequest = useServerRequest();
 
 	useEffect(() => {
+		if (!checkAccess([ROLE.ADMIN], user.roleId)) {
+			return;
+		}
 		if (hash) {
+			setIsLocalLoading(true);
 			Promise.all([
 				serverRequest('fetchRoles'),
 				serverRequest('fetchUsers', searchPhrase, page, PAGINATION_LIMIT),
@@ -43,10 +50,14 @@ export const UsersPageInfo = () => {
 
 				setLastPage(getLastPageFromLinks(usersRes?.res.links));
 			});
+			setIsLocalLoading(false);
 		}
-	}, [serverRequest, shouldUpdateUserList, page, shouldSearch]);
+	}, [serverRequest, shouldUpdateUserList, page, user.roleId, hash, shouldSearch]);
 
 	const onUserRemove = (userId) => {
+		if (!checkAccess([ROLE.ADMIN], user.roleId)) {
+			return;
+		}
 		serverRequest('removeUser', userId).then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
@@ -61,13 +72,13 @@ export const UsersPageInfo = () => {
 
 	const isLoading = useSelector(selectIsLoading);
 
-	if (isLoading) {
+	if (isLoading && isLocalLoading) {
 		return <Loader />;
 	}
 
 	return (
 		<div className={styles.UsersPage}>
-			<PrivateContent error={errorMessage}>
+			<ErrorContent access={ROLE.ADMIN} error={errorMessage}>
 				<div>
 					<div className={styles.header}>
 						<H2 style={{ width: '30%', margin: 'auto' }}> Users: </H2>
@@ -94,7 +105,7 @@ export const UsersPageInfo = () => {
 						</div>
 					</div>
 				</div>
-			</PrivateContent>
+			</ErrorContent>
 		</div>
 	);
 };
