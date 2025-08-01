@@ -1,6 +1,7 @@
+import { request } from '../../../../utils';
 import { deleteNote } from '../../note/delete-note';
 
-export const removeNote = (serverRequest, id) => async (dispatch) => {
+export const removeNote = (id) => async (dispatch) => {
 	dispatch(deleteNote(id));
-	await serverRequest('removeNote', id);
+	await request(`/notes/${id}`, 'DELETE');
 };

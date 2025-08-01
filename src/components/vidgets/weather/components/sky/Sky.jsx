@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 import { IconSky } from './IconSky';
 import styles from './Sky.module.css';
 
@@ -13,3 +13,5 @@ export const Sky = ({ weather, weatherSky }) => {
 		</div>
 	);
 };
+
+Sky.propTypes = { weather: PropTypes.string.isRequired, weatherSky: PropTypes.number.isRequired };

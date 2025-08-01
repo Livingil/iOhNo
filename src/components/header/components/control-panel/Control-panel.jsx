@@ -4,8 +4,8 @@ import { selectUser } from '../../../../redux/selectors';
 import { Icon } from '../../../icon/Icon';
 import { ROLE } from '../../../../constans';
 import { userLogout } from '../../../../redux/actions';
-import styles from './Control-panel.module.css';
 import { checkAccess } from '../../../../utils';
+import styles from './Control-panel.module.css';
 
 export const ControlPanel = () => {
 	const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const ControlPanel = () => {
 	const user = useSelector(selectUser);
 
 	const onLogout = () => {
-		dispatch(userLogout(user.hash));
+		dispatch(userLogout());
 		sessionStorage.removeItem('userData');
 		navigate('/');
 	};

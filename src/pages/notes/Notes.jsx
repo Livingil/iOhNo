@@ -1,43 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { NotesList, NoteContent } from './components';
-// import { useServerRequest } from '../../hooks';
-import { selectIsLoading, selectNotes, selectTriggerNewNote, selectUser, selectUserHash } from '../../redux/selectors';
+import { selectNotes, selectTriggerNewNote, selectUser } from '../../redux/selectors';
 import { setNote, setNotes, setTriggerNewNote } from '../../redux/actions';
-import { dateNow, timeNow } from '../../utils';
+import { dateNow } from '../../utils';
 import { ErrorContent, Loader, Search } from '../../components';
 import { Button } from '../../components/markup-components';
-import styles from './Notes.module.css';
 import { ROLE } from '../../constans';
+import styles from './Notes.module.css';
 
 export const NotesPage = () => {
 	const [flagNewNoteButton, setFlagNewNoteButton] = useState(true);
-	const [errorMessage, setErrorMessage] = useState(null);
 	const [searchPhrase, setSearchPhrase] = useState('');
-
-	// const serverRequest = useServerRequest();
+	const [isLocalLoading, setIsLocalLoading] = useState(true);
 
 	const notes = useSelector(selectNotes);
 	const user = useSelector(selectUser);
-	// const hash = useSelector(selectUserHash);
-	const isLoading = useSelector(selectIsLoading);
+
 	const triggerNewNoteFlag = useSelector(selectTriggerNewNote);
 
 	const dispatch = useDispatch();
 
 	const handleSetFlagNewNoteButton = useCallback((boolValue) => setFlagNewNoteButton(boolValue), []);
-
-	// useEffect(() => {
-	// 	if (user?.id && hash) {
-	// 		serverRequest('fetchUserNotes', user.id).then((userNotesRes) => {
-	// 			if (userNotesRes.error) {
-	// 				setErrorMessage(userNotesRes.error);
-	// 				return;
-	// 			}
-	// 			dispatch(setNotes(userNotesRes.res));
-	// 		});
-	// 	}
-	// }, [dispatch, serverRequest, user.id, hash]);
 
 	const handleNewNote = () => {
 		dispatch(
@@ -62,7 +46,6 @@ export const NotesPage = () => {
 			title: 'New note',
 			content: 'New note',
 			creationAt: dateNow(),
-			timeCreationAt: timeNow(),
 			userId: user.id,
 		};
 
@@ -84,14 +67,15 @@ export const NotesPage = () => {
 			handleNewNote();
 			dispatch(setTriggerNewNote(false));
 		}
+		setIsLocalLoading(false);
 	}, [dispatch, triggerNewNoteFlag]);
 
-	if (isLoading) {
+	if (isLocalLoading) {
 		return <Loader />;
 	}
 
 	return (
-		<ErrorContent access={[ROLE.ADMIN, ROLE.USER]} error={errorMessage}>
+		<ErrorContent access={[ROLE.ADMIN, ROLE.USER]} error={null}>
 			<div className={styles.NotesPage}>
 				<div className={styles.notesList}>
 					<Search onChange={onSearch} />

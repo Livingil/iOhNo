@@ -11,3 +11,4 @@ export * from './async-action/note/load-note';
 export * from './async-action/note/save-note';
 export * from './async-action/note/remove-note';
 export * from './async-action/load-user';
+export * from './weather/weather';

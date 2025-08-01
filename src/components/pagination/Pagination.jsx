@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button } from '../markup-components';
 import styles from './Pagination.module.css';
 
@@ -19,4 +20,10 @@ export const Pagination = ({ handleSetPage, page, lastPage }) => {
 			</Button>
 		</div>
 	);
+};
+
+Pagination.propTypes = {
+	handleSetPage: PropTypes.func.isRequired,
+	page: PropTypes.number.isRequired,
+	lastPage: PropTypes.number.isRequired,
 };

@@ -1,4 +1,5 @@
-// eslint-disable-next-line react/prop-types
+import PropTypes from 'prop-types';
+
 export const IconSky = ({ weatherSky }) => {
 	let sky;
 
@@ -82,3 +83,5 @@ export const IconSky = ({ weatherSky }) => {
 		<img src={`https://openweathermap.org/img/wn/${sky}@2x.png`} alt="Состояние неба" style={{ width: '80px' }} />
 	);
 };
+
+IconSky.propTypes = { weatherSky: PropTypes.number.isRequired };

@@ -11,8 +11,17 @@
 	align-items: center;
 }
 
-.adresName {
+.breadcrumbs {
+	font-size: 14px;
+	margin-left: 5px;
+	color: #555;
+}
+
+.breadcrumbs a {
 	color: #007bff;
-	margin: 5px;
-	cursor: default;
+	text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+	color: #fff;
 }

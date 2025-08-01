@@ -1,19 +1,17 @@
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { selectNote, selectNotes, selectUser } from '../../../../redux/selectors';
 import { Icon } from '../../../../components';
 import { saveNote } from '../../../../redux/actions';
-import { useServerRequest } from '../../../../hooks';
-import styles from './Note-content.module.css';
 import { Textarea } from '../../../../components/markup-components';
+import styles from './Note-content.module.css';
 
 export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) => {
 	const [textTitle, setTextTitle] = useState('');
 	const [textContent, setTextContent] = useState('');
 
 	const dispatch = useDispatch();
-
-	const serverRequest = useServerRequest();
 
 	const user = useSelector(selectUser);
 	const note = useSelector(selectNote);
@@ -39,9 +37,8 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 		event.preventDefault();
 		dispatch(
 			saveNote(
-				serverRequest,
 				{
-					id: note.id || noteDefault.id,
+					id: note?.id ?? noteDefault?.id,
 					title: textTitle,
 					content: textContent,
 					authorId: user.id,
@@ -71,3 +68,5 @@ export const NoteContent = ({ flagNewNoteButton, handleSetFlagNewNoteButton }) =
 		</form>
 	);
 };
+
+NoteContent.propTypes = { flagNewNoteButton: PropTypes.bool, handleSetFlagNewNoteButton: PropTypes.func };

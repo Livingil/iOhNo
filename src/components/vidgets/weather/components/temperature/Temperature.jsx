@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Icon } from '../../../../icon/Icon';
 import styles from './Temperature.module.css';
 
@@ -14,3 +15,5 @@ export const Temperature = ({ temperature }) => {
 		</div>
 	);
 };
+
+Temperature.propTypes = { temperature: PropTypes.number.isRequired };

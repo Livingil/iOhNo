@@ -1,3 +1,3 @@
-export * from './users/Users.jsx';
+export * from './users/UsersPageInfo.jsx';
 export * from './header/Header.jsx';
-export * from './notes/Notes.jsx';
+export * from './notes/NotesPageInfo.jsx';

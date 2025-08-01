@@ -1,15 +1,19 @@
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { H2 } from '../markup-components';
 import { selectUser } from '../../redux/selectors';
-import { ERROR } from '../../constans';
+import { ERROR, PROP_TYPE } from '../../constans';
 import { checkAccess } from '../../utils';
 import styles from './Error-content.module.css';
 
 export const ErrorContent = ({ children, access, serverError = null }) => {
 	const user = useSelector(selectUser);
+	let accessError;
 
-	const accessError = checkAccess(access, user.roleId) ? null : ERROR.ACCESS_DENIED;
+	if (access) {
+		accessError = checkAccess(access, user.roleId) ? null : ERROR.ACCESS_DENIED;
+	}
 
 	const error = serverError || accessError;
 
@@ -27,4 +31,10 @@ export const ErrorContent = ({ children, access, serverError = null }) => {
 	) : (
 		<div>{children}</div>
 	);
+};
+
+ErrorContent.propTypes = {
+	children: PropTypes.node.isRequired,
+	access: PropTypes.arrayOf(PROP_TYPE.ROLE).isRequired,
+	serverError: PROP_TYPE.ERROR,
 };

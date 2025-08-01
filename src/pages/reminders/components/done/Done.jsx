@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { DoneRow } from './components';
-import { useServerRequest } from '../../../../hooks';
 import { ROLE } from '../../../../constans';
 import { ErrorContent } from '../../../../components';
+import { request } from '../../../../utils';
 import styles from './Done.module.css';
 
 export const DonePage = () => {
@@ -11,10 +11,8 @@ export const DonePage = () => {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
 
-	const serverRequest = useServerRequest();
-
 	useEffect(() => {
-		Promise.all([serverRequest('fetchRoles'), serverRequest('fetchUsers')]).then(([rolesRes, usersRes]) => {
+		Promise.all([request('fetchRoles'), request('fetchUsers')]).then(([rolesRes, usersRes]) => {
 			if (usersRes.ertor || rolesRes.error) {
 				setErrorMessage(usersRes.error || rolesRes.error);
 				return;
@@ -23,10 +21,10 @@ export const DonePage = () => {
 			setUsers(usersRes.res);
 			setRoles(rolesRes.res);
 		});
-	}, [serverRequest, shouldUpdateUserList]);
+	}, [shouldUpdateUserList]);
 
 	const onUserRemove = (userId) => {
-		serverRequest('removeUser', userId).then(() => {
+		request('removeUser', userId).then(() => {
 			setShouldUpdateUserList(!shouldUpdateUserList);
 		});
 	};

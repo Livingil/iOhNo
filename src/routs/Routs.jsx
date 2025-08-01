@@ -1,5 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
-import { Authorization, HomePage, InfoPage, NotesPage, ProfilePage, Registration, RemindersPage } from '../pages';
+import {
+	Authorization,
+	HomePage,
+	InfoPage,
+	NotesPage,
+	ProfilePage,
+	Registration,
+	RemindersPage,
+	Weather,
+} from '../pages';
 import { NotesPageInfo, UsersPageInfo } from '../pages/info/components';
 import { NotePageInfo } from '../pages/info/components/notes/components';
 import { UserPageInfo } from '../pages/info/components/users/components';
@@ -19,20 +28,18 @@ export const Routs = () => {
 				<Route path="notes" element={<NotesPageInfo />} />
 				<Route path="notes/:id" element={<NotePageInfo />} />
 			</Route>
+			<Route path="/weather" element={<Weather />} />
+
 			<Route path="/reminders" element={<RemindersPage />}>
-				<Route path="done" element={<div>Done</div>} />
+				<Route path="done" element={<div>Done in development</div>} />
 			</Route>
 			<Route path="/profile" element={<ProfilePage />} />
 
-			<Route path="/create" element={<div>Create</div>} />
-			<Route path="/vidgets" element={<div>Vidgets</div>} />
-			<Route path="/weather" element={<div>Weather</div>} />
-			<Route path="/calendar" element={<div>Сalendar</div>} />
-			{/* <Route path="/create-note" element={<div>Create note</div>} /> */}
-			<Route path="/create-event" element={<div>Create event</div>} />
-			<Route path="/create-reminder" element={<div>Create reminder</div>} />
+			<Route path="/create" element={<div>Create in development</div>} />
+			<Route path="/vidgets" element={<div>Vidgets in development</div>} />
+			<Route path="/calendar" element={<div>Сalendar in development</div>} />
 
-			<Route path="*" element={<ErrorContent error={ERROR.PAGE_NOT_EXIST} />} />
+			<Route path="*" element={<ErrorContent serverError={ERROR.PAGE_NOT_EXIST} />} />
 		</Routes>
 	);
 };

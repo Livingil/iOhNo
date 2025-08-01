@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Icon } from '../../../../../../components';
-import { useServerRequest } from '../../../../../../hooks';
+import { request } from '../../../../../../utils';
 import styles from './Done-row.module.css';
 
 export const DoneRow = ({ user, roles, onUserRemove }) => {
 	const [initialRoleId, setInitialRoleId] = useState(user.roleId);
 	const [selectedRoleId, setSelectedRoleId] = useState(user.roleId);
-	const serverRequest = useServerRequest();
 
 	const inSaveButtonDisabled = selectedRoleId === initialRoleId;
 
@@ -15,7 +14,7 @@ export const DoneRow = ({ user, roles, onUserRemove }) => {
 	};
 
 	const onRoleSave = (userId, newUserRoleId) => {
-		serverRequest('updateUserRole', userId, newUserRoleId).then(() => {
+		request('updateUserRole', userId, newUserRoleId).then(() => {
 			setInitialRoleId(newUserRoleId);
 		});
 	};

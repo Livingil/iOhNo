@@ -1,36 +1,22 @@
 import { Routs } from './routs/Routs';
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Footer, Header } from './components';
+import { ErrorContent, Footer, Header, Loader } from './components';
 import { setNotes, setUser } from './redux/actions';
-import { useServerRequest } from './hooks';
 import { selectUser, selectUserHash } from './redux/selectors';
 import { ROLE } from './constans';
-import { checkAccess } from './utils';
+import { checkAccess, request } from './utils';
 import styles from './iOhNo.module.css';
 
 export const IOhNo = () => {
-	const dispatch = useDispatch();
+	const [errorMessage, setErrorMessage] = useState(null);
 
-	const serverRequest = useServerRequest();
+	const [isLocalLoading, setIsLocalLoading] = useState(true);
+
+	const dispatch = useDispatch();
 
 	const user = useSelector(selectUser);
 	const hash = useSelector(selectUserHash);
-
-	useEffect(() => {
-		if (!checkAccess([ROLE.ADMIN, ROLE.USER], user.roleId)) {
-			return;
-		}
-		if (user?.id && hash) {
-			serverRequest('fetchUserNotes', user.id).then((userNotesRes) => {
-				// if (userNotesRes.error) {
-				// 	setErrorMessage(userNotesRes.error);
-				// 	return;
-				// }
-				dispatch(setNotes(userNotesRes.res));
-			});
-		}
-	}, [dispatch, serverRequest, user.id, hash]);
 
 	useLayoutEffect(() => {
 		const currentUserDataJSON = sessionStorage.getItem('userData');
@@ -43,14 +29,25 @@ export const IOhNo = () => {
 		dispatch(setUser(currentUserData));
 	}, [dispatch]);
 
+	useEffect(() => {
+		if (!checkAccess([ROLE.ADMIN, ROLE.USER], user.roleId)) {
+			setIsLocalLoading(false);
+			return;
+		}
+
+		request('/notes').then(({ error, data: notes }) => {
+			dispatch(setNotes(notes));
+			setErrorMessage(error);
+			setIsLocalLoading(false);
+		});
+	}, [dispatch, user.roleId, hash]);
+
 	return (
 		<div className={styles.iOhNo}>
 			<Header />
-
-			<div className={styles.content}>
-				<Routs />
-			</div>
-
+			<ErrorContent error={errorMessage}>
+				<div className={styles.content}>{isLocalLoading ? <Loader /> : <Routs />}</div>
+			</ErrorContent>
 			<Footer />
 		</div>
 	);

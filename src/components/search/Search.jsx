@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Icon } from '../icon/Icon';
 import { Input } from '../markup-components';
 import styles from './Search.module.css';
@@ -16,3 +17,5 @@ export const Search = ({ searchPhrase, onChange, placeholderText, ...params }) =
 		</div>
 	);
 };
+
+Search.propTypes = { searchPhrase: PropTypes.string, onChange: PropTypes.func, placeholderText: PropTypes.string };

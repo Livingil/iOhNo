@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './Textarea.module.css';
 
 export const Textarea = ({ className, value, onChange }) => (
@@ -11,3 +12,5 @@ export const Textarea = ({ className, value, onChange }) => (
 		onChange={onChange}
 	/>
 );
+
+Textarea.propTypes = { className: PropTypes.string, value: PropTypes.string, onChange: PropTypes.func };

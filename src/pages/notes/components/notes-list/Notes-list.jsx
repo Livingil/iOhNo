@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../../../components';
 import { removeNote, setNote } from '../../../../redux/actions';
-import { useServerRequest } from '../../../../hooks';
-import styles from './Notes-list.module.css';
 import { selectNotes } from '../../../../redux/selectors';
+import { formatDate } from '../../../../utils';
+import { PROP_TYPE } from '../../../../constans';
+import styles from './Notes-list.module.css';
 
 export const NotesList = ({ searchNotes }) => {
 	const dispatch = useDispatch();
-	const serverRequest = useServerRequest();
 
 	const notes = useSelector(selectNotes);
 
@@ -19,7 +20,7 @@ export const NotesList = ({ searchNotes }) => {
 	const handleClickDelete = (id, event) => {
 		event.preventDefault();
 		event.stopPropagation();
-		dispatch(removeNote(serverRequest, id));
+		dispatch(removeNote(id));
 	};
 
 	const currentNotesList = searchNotes || notes || [];
@@ -39,13 +40,12 @@ export const NotesList = ({ searchNotes }) => {
 						</div>
 					</div>
 
-					<div className={styles.noteDate}>
-						{note.creationAt}
-						<div className={styles.time}>{note.timeCreationAt}</div>
-					</div>
+					<div className={styles.noteDate}>{formatDate(note.creationAt)}</div>
 					<div className={styles.noteContent}>{note.content}</div>
 				</div>
 			))}
 		</div>
 	);
 };
+
+NotesList.propTypes = { searchNotes: PropTypes.arrayOf(PROP_TYPE.NOTE) };

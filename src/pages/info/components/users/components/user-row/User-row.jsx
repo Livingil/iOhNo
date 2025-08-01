@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Icon, Loader } from '../../../../../../components';
-import { useClickUrl, useServerRequest } from '../../../../../../hooks';
+import { Icon } from '../../../../../../components';
+import { useClickUrl } from '../../../../../../hooks';
+import { formatDate, request } from '../../../../../../utils';
+import { PROP_TYPE } from '../../../../../../constans';
 import styles from './User-row.module.css';
-import { useSelector } from 'react-redux';
-import { selectIsLoading } from '../../../../../../redux/selectors';
 
 export const UserRow = ({ user, roles, onUserRemove }) => {
 	const [initialRoleId, setInitialRoleId] = useState(user.roleId);
 	const [selectedRoleId, setSelectedRoleId] = useState(user.roleId);
 
-	const serverRequest = useServerRequest();
 	const clickUrl = useClickUrl(`/info/users/${user.id}`);
 
 	const inSaveButtonDisabled = selectedRoleId === initialRoleId;
@@ -19,21 +19,15 @@ export const UserRow = ({ user, roles, onUserRemove }) => {
 	};
 
 	const onRoleSave = (userId, newUserRoleId) => {
-		serverRequest('updateUserRole', userId, newUserRoleId).then(() => {
+		request(`/users/${userId}`, 'PATCH', { roleId: newUserRoleId }).then(() => {
 			setInitialRoleId(newUserRoleId);
 		});
 	};
 
-	const isLoading = useSelector(selectIsLoading);
-
-	if (isLoading) {
-		return <Loader />;
-	}
-
 	return (
 		<div onClick={clickUrl} className={styles.tableRow}>
 			<div className={styles.loginColumn}>{user.login}</div>
-			<div className={styles.regAtColumn}>{user.registeredAt}</div>
+			<div className={styles.regAtColumn}>{formatDate(user.registeredAt)}</div>
 			<div className={styles.roleColumn} onClick={(e) => e.stopPropagation()}>
 				<select value={selectedRoleId} onChange={onRoleChange} onClick={(e) => e.stopPropagation()}>
 					{roles.map((role) => (
@@ -71,3 +65,5 @@ export const UserRow = ({ user, roles, onUserRemove }) => {
 		</div>
 	);
 };
+
+UserRow.propTypes = { user: PROP_TYPE.USER, roles: PROP_TYPE.ROLE, onUserRemove: PropTypes.func };

@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authFormSchema } from './components';
-import { server } from '../../bff';
 import { Button, H2, Input } from '../../components/markup-components';
 import { setUser } from '../../redux/actions';
 import { selectUser } from '../../redux/selectors';
 import { ROLE } from '../../constans';
 import { useResetForm } from '../../hooks';
+import { request } from '../../utils';
+import { Loader } from '../../components';
 import styles from './Authorization.module.css';
 
 export const Authorization = () => {
@@ -24,6 +25,7 @@ export const Authorization = () => {
 	});
 
 	const [serverError, setServerError] = useState(null);
+	const [isLocalLoading, setIsLocalLoading] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -32,20 +34,29 @@ export const Authorization = () => {
 	useResetForm(reset);
 
 	const onSubmit = ({ login, password }) => {
-		server.authorize(login, password).then(({ error, res }) => {
-			if (error) {
-				setServerError(`Request Error: ${error}`);
-				return;
-			}
+		setIsLocalLoading(true);
+		try {
+			request('/login', 'POST', { login, password }).then(({ error, user }) => {
+				if (error) {
+					setServerError(`Request Error: ${error}`);
 
-			dispatch(setUser(res));
+					return;
+				}
 
-			sessionStorage.setItem('userData', JSON.stringify(res));
-		});
+				dispatch(setUser(user));
+				sessionStorage.setItem('userData', JSON.stringify(user));
+			});
+		} finally {
+			setIsLocalLoading(false);
+		}
 	};
 
 	const formError = errors?.login?.message || errors?.password?.message;
 	const errorMessage = formError || serverError;
+
+	if (isLocalLoading) {
+		return <Loader />;
+	}
 
 	if (user.roleId !== ROLE.GUEST) {
 		return <Navigate to="/" />;

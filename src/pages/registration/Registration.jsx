@@ -9,7 +9,7 @@ import { setUser } from '../../redux/actions';
 import { selectUser } from '../../redux/selectors';
 import { ROLE } from '../../constans';
 import { useResetForm } from '../../hooks';
-import { server } from '../../bff';
+import { request } from '../../utils';
 import styles from './Registration.module.css';
 
 export const Registration = () => {
@@ -32,14 +32,14 @@ export const Registration = () => {
 	useResetForm(reset);
 
 	const onSubmit = ({ login, password }) => {
-		server.register(login, password).then(({ error, res }) => {
+		request('/register', 'POST', { login, password }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`Request Error: ${error}`);
 				return;
 			}
 
-			dispatch(setUser(res));
-			sessionStorage.setItem('userData', JSON.stringify(res));
+			dispatch(setUser(user));
+			sessionStorage.setItem('userData', JSON.stringify(user));
 		});
 	};
 

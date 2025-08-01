@@ -7,6 +7,7 @@ export const Calendar = () => {
 	return (
 		<div onClick={handleClick} className={styles.Vidgets}>
 			<HeaderCalendar />
+			<span className={styles.dev}>in development</span>
 		</div>
 	);
 };

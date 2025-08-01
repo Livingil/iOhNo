@@ -5,3 +5,4 @@ export * from './registration/Registration.jsx';
 export * from './info/Info.jsx';
 export * from './reminders/Reminders.jsx';
 export * from './profile/Profile.jsx';
+export * from './weather/Weather.jsx';
